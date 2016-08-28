@@ -1,0 +1,1458 @@
+{
+  "accessors": {
+    "accessor_index_0": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 0,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 25056,
+      "type": "SCALAR",
+      "min": [
+        0
+      ],
+      "max": [
+        57019
+      ]
+    },
+    "accessor_index_1": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 50112,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 17748,
+      "type": "SCALAR",
+      "min": [
+        1236
+      ],
+      "max": [
+        38330
+      ]
+    },
+    "accessor_index_2": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 85608,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 1440,
+      "type": "SCALAR",
+      "min": [
+        6380
+      ],
+      "max": [
+        6955
+      ]
+    },
+    "accessor_index_3": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 88488,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 144,
+      "type": "SCALAR",
+      "min": [
+        6956
+      ],
+      "max": [
+        7027
+      ]
+    },
+    "accessor_index_4": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 88776,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 696,
+      "type": "SCALAR",
+      "min": [
+        7028
+      ],
+      "max": [
+        12955
+      ]
+    },
+    "accessor_index_5": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 90168,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 2736,
+      "type": "SCALAR",
+      "min": [
+        7172
+      ],
+      "max": [
+        7651
+      ]
+    },
+    "accessor_index_6": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 95640,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 16560,
+      "type": "SCALAR",
+      "min": [
+        7652
+      ],
+      "max": [
+        41308
+      ]
+    },
+    "accessor_index_7": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 128760,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 192,
+      "type": "SCALAR",
+      "min": [
+        8724
+      ],
+      "max": [
+        8803
+      ]
+    },
+    "accessor_index_8": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 129144,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 6756,
+      "type": "SCALAR",
+      "min": [
+        8804
+      ],
+      "max": [
+        15344
+      ]
+    },
+    "accessor_index_9": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 142656,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 2304,
+      "type": "SCALAR",
+      "min": [
+        10680
+      ],
+      "max": [
+        11899
+      ]
+    },
+    "accessor_index_10": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 147264,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 33822,
+      "type": "SCALAR",
+      "min": [
+        11900
+      ],
+      "max": [
+        34610
+      ]
+    },
+    "accessor_index_11": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 214908,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 48,
+      "type": "SCALAR",
+      "min": [
+        13593
+      ],
+      "max": [
+        13610
+      ]
+    },
+    "accessor_index_12": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 215004,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 62574,
+      "type": "SCALAR",
+      "min": [
+        13611
+      ],
+      "max": [
+        51669
+      ]
+    },
+    "accessor_index_13": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 340152,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 144,
+      "type": "SCALAR",
+      "min": [
+        15345
+      ],
+      "max": [
+        15416
+      ]
+    },
+    "accessor_index_14": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 340440,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 14931,
+      "type": "SCALAR",
+      "min": [
+        41309
+      ],
+      "max": [
+        44411
+      ]
+    },
+    "accessor_index_15": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 370302,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 7503,
+      "type": "SCALAR",
+      "min": [
+        57020
+      ],
+      "max": [
+        60385
+      ]
+    },
+    "accessor_index_16": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 385308,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 882,
+      "type": "SCALAR",
+      "min": [
+        59573
+      ],
+      "max": [
+        60630
+      ]
+    },
+    "accessor_index_17": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 387072,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 4878,
+      "type": "SCALAR",
+      "min": [
+        59582
+      ],
+      "max": [
+        61377
+      ]
+    },
+    "accessor_index_18": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 396828,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 210,
+      "type": "SCALAR",
+      "min": [
+        60386
+      ],
+      "max": [
+        60461
+      ]
+    },
+    "accessor_index_19": {
+      "bufferView": "bufferView_1",
+      "byteOffset": 397248,
+      "byteStride": 0,
+      "componentType": 5123,
+      "count": 726,
+      "type": "SCALAR",
+      "min": [
+        60631
+      ],
+      "max": [
+        60831
+      ]
+    },
+    "accessor_position": {
+      "bufferView": "bufferView_0",
+      "byteOffset": 0,
+      "byteStride": 0,
+      "componentType": 5126,
+      "count": 46866,
+      "min": [
+        -17.40276,
+        -0.906689,
+        -7.798512
+      ],
+      "max": [
+        17.41724,
+        15.653311,
+        7.801488
+      ],
+      "type": "VEC3"
+    },
+    "accessor_uv": {
+      "bufferView": "bufferView_0",
+      "byteOffset": 562392,
+      "byteStride": 0,
+      "componentType": 5126,
+      "count": 46866,
+      "type": "VEC2",
+      "min": [
+        -13.4649658203125,
+        -22.4295654296875
+      ],
+      "max": [
+        14.065296173095703,
+        23.429550170898438
+      ]
+    }
+  },
+  "asset": {
+    "generator": "OBJ2GLTF",
+    "premultipliedAlpha": true,
+    "profile": {
+      "api": "WebGL",
+      "version": "1.0"
+    },
+    "version": "1.0"
+  },
+  "buffers": {
+    "sponza_buffer": {
+      "byteLength": 1336020,
+      "type": "arraybuffer",
+      "uri": "sponza_buffer.bin"
+    }
+  },
+  "bufferViews": {
+    "bufferView_0": {
+      "buffer": "sponza_buffer",
+      "byteLength": 937320,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    "bufferView_1": {
+      "buffer": "sponza_buffer",
+      "byteLength": 398700,
+      "byteOffset": 937320,
+      "target": 34963
+    }
+  },
+  "images": {
+    "SP_LUK": {
+      "uri": "SP_LUK.JPG"
+    },
+    "00_SKAP": {
+      "uri": "00_SKAP.JPG"
+    },
+    "01_S_BA": {
+      "uri": "01_S_BA.JPG"
+    },
+    "01_ST_KP": {
+      "uri": "01_ST_KP.JPG"
+    },
+    "01_STUB": {
+      "uri": "01_STUB.JPG"
+    },
+    "KAMEN": {
+      "uri": "KAMEN.JPG"
+    },
+    "X01_ST": {
+      "uri": "X01_ST.JPG"
+    },
+    "KAMEN-stup": {
+      "uri": "KAMEN-stup.JPG"
+    },
+    "PROZOR1": {
+      "uri": "PROZOR1.JPG"
+    },
+    "VRATA_KO": {
+      "uri": "VRATA_KO.JPG"
+    },
+    "RELJEF": {
+      "uri": "RELJEF.JPG"
+    },
+    "VRATA_KR": {
+      "uri": "VRATA_KR.JPG"
+    }
+  },
+  "materials": {
+    "material_sp_00_luk_mali": {
+      "name": "sp_00_luk_mali",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_SP_LUK",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_svod_kapitel": {
+      "name": "sp_svod_kapitel",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_00_SKAP",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_stub_baza_": {
+      "name": "sp_01_stub_baza_",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": [
+          0.784314,
+          0.784314,
+          0.784314,
+          1
+        ],
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 19.999998,
+        "transparency": 1
+      },
+      "technique": "technique1"
+    },
+    "material_sp_01_stub_kut": {
+      "name": "sp_01_stub_kut",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_STUB",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_stup": {
+      "name": "sp_00_stup",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_STUB",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_stub_baza": {
+      "name": "sp_01_stub_baza",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_S_BA",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_luk_mal1": {
+      "name": "sp_00_luk_mal1",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_ST_KP",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_stub": {
+      "name": "sp_01_stub",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_STUB",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_stup": {
+      "name": "sp_01_stup",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_X01_ST",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_vijenac": {
+      "name": "sp_vijenac",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_00_SKAP",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_svod": {
+      "name": "sp_00_svod",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_KAMEN-stup",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0.034039,
+          0.032314,
+          0.029333,
+          1
+        ],
+        "shininess": 1,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_02_reljef": {
+      "name": "sp_02_reljef",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_RELJEF",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_luk_a": {
+      "name": "sp_01_luk_a",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_SP_LUK",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_zid_vani": {
+      "name": "sp_zid_vani",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_KAMEN",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_01_stup_baza": {
+      "name": "sp_01_stup_baza",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_01_S_BA",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_zid": {
+      "name": "sp_00_zid",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_KAMEN",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_prozor": {
+      "name": "sp_00_prozor",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_PROZOR1",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_vrata_krug": {
+      "name": "sp_00_vrata_krug",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_VRATA_KR",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 19.999998,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_pod": {
+      "name": "sp_00_pod",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_KAMEN",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 50,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    },
+    "material_sp_00_vrata_kock": {
+      "name": "sp_00_vrata_kock",
+      "extensions": {},
+      "values": {
+        "ambient": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "diffuse": "texture_VRATA_KO",
+        "emission": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "specular": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "shininess": 19.999998,
+        "transparency": 1
+      },
+      "technique": "technique0"
+    }
+  },
+  "meshes": {
+    "mesh_sponza": {
+      "name": "sponza",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_0",
+          "material": "material_sp_00_luk_mali",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_1",
+          "material": "material_sp_svod_kapitel",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_2",
+          "material": "material_sp_01_stub_baza_",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_3",
+          "material": "material_sp_01_stub_kut",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_4",
+          "material": "material_sp_00_stup",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_5",
+          "material": "material_sp_01_stub_baza",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_6",
+          "material": "material_sp_00_luk_mal1",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_7",
+          "material": "material_sp_01_stub",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_8",
+          "material": "material_sp_01_stup",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_9",
+          "material": "material_sp_vijenac",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_10",
+          "material": "material_sp_00_svod",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_11",
+          "material": "material_sp_02_reljef",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_12",
+          "material": "material_sp_01_luk_a",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_13",
+          "material": "material_sp_zid_vani",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_14",
+          "material": "material_sp_01_stup_baza",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_15",
+          "material": "material_sp_00_zid",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_16",
+          "material": "material_sp_00_prozor",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_17",
+          "material": "material_sp_00_vrata_krug",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_18",
+          "material": "material_sp_00_pod",
+          "mode": 4
+        },
+        {
+          "attributes": {
+            "POSITION": "accessor_position",
+            "TEXCOORD_0": "accessor_uv"
+          },
+          "indices": "accessor_index_19",
+          "material": "material_sp_00_vrata_kock",
+          "mode": 4
+        }
+      ]
+    }
+  },
+  "nodes": {
+    "node_sponza": {
+      "children": [],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "meshes": [
+        "mesh_sponza"
+      ],
+      "name": "sponza"
+    }
+  },
+  "samplers": {
+    "sampler_0": {
+      "magFilter": 9729,
+      "minFilter": 9986,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  },
+  "scene": "scene_sponza",
+  "scenes": {
+    "scene_sponza": {
+      "nodes": [
+        "node_sponza"
+      ]
+    }
+  },
+  "textures": {
+    "texture_SP_LUK": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "SP_LUK",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_00_SKAP": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "00_SKAP",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_01_S_BA": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "01_S_BA",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_01_ST_KP": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "01_ST_KP",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_01_STUB": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "01_STUB",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_KAMEN": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "KAMEN",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_X01_ST": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "X01_ST",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_KAMEN-stup": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "KAMEN-stup",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_PROZOR1": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "PROZOR1",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_VRATA_KO": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "VRATA_KO",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_RELJEF": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "RELJEF",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_VRATA_KR": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "VRATA_KR",
+      "target": 3553,
+      "type": 5121
+    }
+  },
+  "extensionsUsed": [],
+  "animations": {},
+  "cameras": {},
+  "extensions": {},
+  "techniques": {
+    "technique0": {
+      "attributes": {
+        "a_position": "position",
+        "a_normal": "normal",
+        "a_texcoord_0": "texcoord_0"
+      },
+      "parameters": {
+        "modelViewMatrix": {
+          "semantic": "MODELVIEW",
+          "type": 35676
+        },
+        "projectionMatrix": {
+          "semantic": "PROJECTION",
+          "type": 35676
+        },
+        "normalMatrix": {
+          "semantic": "MODELVIEWINVERSETRANSPOSE",
+          "type": 35675
+        },
+        "ambient": {
+          "type": 35666
+        },
+        "diffuse": {
+          "type": 35678
+        },
+        "emission": {
+          "type": 35666
+        },
+        "specular": {
+          "type": 35666
+        },
+        "shininess": {
+          "type": 5126
+        },
+        "transparency": {
+          "type": 5126
+        },
+        "position": {
+          "semantic": "POSITION",
+          "type": 35665
+        },
+        "normal": {
+          "semantic": "NORMAL",
+          "type": 35665
+        },
+        "texcoord_0": {
+          "semantic": "TEXCOORD_0",
+          "type": 35664
+        }
+      },
+      "program": "program0",
+      "states": {
+        "enable": [
+          2884,
+          2929
+        ]
+      },
+      "uniforms": {
+        "u_modelViewMatrix": "modelViewMatrix",
+        "u_projectionMatrix": "projectionMatrix",
+        "u_normalMatrix": "normalMatrix",
+        "u_ambient": "ambient",
+        "u_diffuse": "diffuse",
+        "u_emission": "emission",
+        "u_specular": "specular",
+        "u_shininess": "shininess",
+        "u_transparency": "transparency"
+      }
+    },
+    "technique1": {
+      "attributes": {
+        "a_position": "position",
+        "a_normal": "normal"
+      },
+      "parameters": {
+        "modelViewMatrix": {
+          "semantic": "MODELVIEW",
+          "type": 35676
+        },
+        "projectionMatrix": {
+          "semantic": "PROJECTION",
+          "type": 35676
+        },
+        "normalMatrix": {
+          "semantic": "MODELVIEWINVERSETRANSPOSE",
+          "type": 35675
+        },
+        "ambient": {
+          "type": 35666
+        },
+        "diffuse": {
+          "type": 35666
+        },
+        "emission": {
+          "type": 35666
+        },
+        "specular": {
+          "type": 35666
+        },
+        "shininess": {
+          "type": 5126
+        },
+        "transparency": {
+          "type": 5126
+        },
+        "position": {
+          "semantic": "POSITION",
+          "type": 35665
+        },
+        "normal": {
+          "semantic": "NORMAL",
+          "type": 35665
+        }
+      },
+      "program": "program1",
+      "states": {
+        "enable": [
+          2884,
+          2929
+        ]
+      },
+      "uniforms": {
+        "u_modelViewMatrix": "modelViewMatrix",
+        "u_projectionMatrix": "projectionMatrix",
+        "u_normalMatrix": "normalMatrix",
+        "u_ambient": "ambient",
+        "u_diffuse": "diffuse",
+        "u_emission": "emission",
+        "u_specular": "specular",
+        "u_shininess": "shininess",
+        "u_transparency": "transparency"
+      }
+    }
+  },
+  "programs": {
+    "program0": {
+      "attributes": [
+        "a_position",
+        "a_normal",
+        "a_texcoord_0"
+      ],
+      "fragmentShader": "fragmentShader0",
+      "vertexShader": "vertexShader0"
+    },
+    "program1": {
+      "attributes": [
+        "a_position",
+        "a_normal"
+      ],
+      "fragmentShader": "fragmentShader1",
+      "vertexShader": "vertexShader1"
+    }
+  },
+  "shaders": {
+    "vertexShader0": {
+      "type": 35633,
+      "uri": "vertexShader0.glsl"
+    },
+    "fragmentShader0": {
+      "type": 35632,
+      "uri": "fragmentShader0.glsl"
+    },
+    "vertexShader1": {
+      "type": 35633,
+      "uri": "vertexShader1.glsl"
+    },
+    "fragmentShader1": {
+      "type": 35632,
+      "uri": "fragmentShader1.glsl"
+    }
+  },
+  "skins": {}
+}
