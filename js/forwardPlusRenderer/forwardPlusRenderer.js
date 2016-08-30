@@ -84,16 +84,17 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         console.log("Forward+ Renderer init");
 
-        FPR.initShaders();
-        FPR.initStats();
-        
-
         // use static canvas size for uniform profiling results on different screen size
         canvas = document.getElementById('canvas');
         width = canvas.width;
         height = canvas.height;
 
         gl = FPR.gl = canvas.getContext( 'webgl', { antialias: true } );
+
+        FPR.initShaders();
+        FPR.initStats();
+
+        
 
         camera = new THREE.PerspectiveCamera(
             45,             // Field of view
