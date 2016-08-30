@@ -4,15 +4,29 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var FPR = ForwardPlusRenderer;
 
+    var pass = FPR.pass = {
+        depthPrepass: {},
+        lightCulling: {},
+        lightAccumulation: {}, 
 
-    var renderer;
-    var model;
-    var scene;
+        forward: {}
+    };
+
+
+    // var renderer;
+    // var model;
+    // var scene;
+
+    // Use Three.js camera and controls implementation
+    // grab
     var camera;
     var controls;
 
+    var canvas;
     var width;
     var height;
+
+    var gl;
 
     var resize = FPR.resize = function() {
         camera.aspect = width / height;
@@ -21,15 +35,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         render();
     };
 
-    var stats;
-    function _initStats() {
-        stats = new Stats();
-        stats.setMode(0); // 0: fps, 1: ms, 2: mb
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.left = '0px';
-        stats.domElement.style.top = '0px';
-        document.body.appendChild(stats.domElement);
-    }
+    // stats.js
+    var stats = FPR.stats;
 
 
     // Lights
@@ -68,39 +75,25 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         }
     }
 
-    var defaultVS = "\
-        void main() {\
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);\
-        }\
-    ";
-
-    var testFS = "\
-        void main() {\
-            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\
-        }\
-    ";
 
     
     /**
-     * 
+     * Global init
      */
     var init = FPR.init = function (params) {
 
         console.log("Forward+ Renderer init");
 
-        _initStats();
+        FPR.initShaders();
+        FPR.initStats();
+        
 
         // use static canvas size for uniform profiling results on different screen size
-        var canvas = document.getElementById('canvas');
+        canvas = document.getElementById('canvas');
         width = canvas.width;
         height = canvas.height;
 
-        renderer = new THREE.WebGLRenderer({
-            antialias: true, 
-            canvas: canvas
-        });
-
-        scene = new THREE.Scene();
+        gl = FPR.gl = canvas.getContext( 'webgl', { antialias: true } );
 
         camera = new THREE.PerspectiveCamera(
             45,             // Field of view
@@ -110,57 +103,51 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         );
         camera.position.set(-15.5, 1, -1);
 
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls = new THREE.OrbitControls(camera, canvas);
         controls.enableDamping = true;
         controls.enableZoom = true;
-        controls.target.set(0, 4, 0);
+        controls.target.set(0, 0, 0);
         controls.rotateSpeed = 0.3;
         controls.zoomSpeed = 1.0;
         controls.panSpeed = 2.0;
 
 
-        // TEMP TEST: lights
-        var testLight = new THREE.PointLight(0xff0000, 2, 100);
-        testLight.position.set(1, 1.5, 2);
-        scene.add(testLight);
-
-
-        // TEST: custom program (default vertex + custom fragment)
-        var material = new THREE.ShaderMaterial({
-            vertexShader: defaultVS,
-            fragmentShader: testFS
-        });
-
-
 
         // init scene with gltf model
-        var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
-        //var url = "models/glTF-duck/duck.gltf";
-        glTFLoader.load(url, function (gltf) {
-            scene.add(gltf.scene);
+        //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
+        var url = "models/glTF-duck/duck.gltf";
+        FPR.scene.loadGLTF(url, function (gltf) {
 
 
-            //render();
             update();
         });
+
+
+
+
+        // load shaders
+
     };
 
     var render = FPR.render = function () {
-        //if (renderer) {
-            renderer.render(scene, camera);
-        //}
-        
+
     };
 
     var update = function() {
+        // get mouse input info from Three::Controls
         controls.update();
 
-        //THREE.glTFShaders.update(scene, camera);
+        // update camera 
+        camera.updateMatrixWorld();
+        camera.matrixWorldInverse.getInverse(camera.matrixWorld);   // viewMatrix
+        cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+
 
         stats.end();
         stats.begin();
 
         render();
+
         //if (!aborted) {
             requestAnimationFrame(update);
         //}
