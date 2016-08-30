@@ -5,56 +5,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var FPR = ForwardPlusRenderer;
 
 
-    // Lights
-
-    // TODO: Edit if you want to change the light initial positions
-    var light = FPR.lights = [];
-
-    FPR.light_min = [-14, 0, -6];
-    FPR.light_max = [14, 18, 6];
-    FPR.light_dt = -0.03;
-    FPR.LIGHT_RADIUS = 4.0;
-    FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
-    
-    function setupLights() {
-        Math.seedrandom(0);
-
-        var posfn = function() {
-            var r = [0, 0, 0];
-            for (var i = 0; i < 3; i++) {
-                var mn = R.light_min[i];
-                var mx = R.light_max[i];
-                r[i] = Math.random() * (mx - mn) + mn;
-            }
-            return r;
-        };
-
-        for (var i = 0; i < R.NUM_LIGHTS; i++) {
-            lights.push({
-                pos: posfn(),
-                col: [
-                    1 + Math.random(),
-                    1 + Math.random(),
-                    1 + Math.random()],
-                rad: R.LIGHT_RADIUS
-            });
-        }
-    }
-
-
-    /**
-     * @param {Object} params
-     * 
-     * @param {THREE.WebGLRenderer} params.renderer
-     * 
-     * 
-     * 
-     * used to be in deferred shader
-     * @param {THREE.Matrix4} params.cameraMat
-     * @param {THREE.Matrix4} params.projMat
-     * ...
-     */
-
     var renderer;
     var model;
     var scene;
@@ -64,7 +14,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var width;
     var height;
 
-    var resize = FPR.init = function() {
+    var resize = FPR.resize = function() {
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
@@ -81,6 +31,54 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         document.body.appendChild(stats.domElement);
     }
 
+
+    // Lights
+
+    // TODO: Edit if you want to change the light initial positions
+    var light = FPR.lights = [];
+
+    FPR.light_min = [-14, 0, -6];
+    FPR.light_max = [14, 18, 6];
+    FPR.light_dt = -0.03;
+    FPR.LIGHT_RADIUS = 4.0;
+    FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
+    
+    function _initLights() {
+        Math.seedrandom(0);
+
+        var posfn = function() {
+            var r = [0, 0, 0];
+            for (var i = 0; i < 3; i++) {
+                var mn = FPR.light_min[i];
+                var mx = FPR.light_max[i];
+                r[i] = Math.random() * (mx - mn) + mn;
+            }
+            return r;
+        };
+
+        for (var i = 0; i < FPR.NUM_LIGHTS; i++) {
+            lights.push({
+                pos: posfn(),
+                col: [
+                    1 + Math.random(),
+                    1 + Math.random(),
+                    1 + Math.random()],
+                rad: FPR.LIGHT_RADIUS
+            });
+        }
+    }
+
+    var defaultVS = "\
+        void main() {\
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);\
+        }\
+    ";
+
+    var testFS = "\
+        void main() {\
+            gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);\
+        }\
+    ";
 
     
     /**
@@ -120,10 +118,27 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         controls.zoomSpeed = 1.0;
         controls.panSpeed = 2.0;
 
-        // gltf model
+
+        // TEMP TEST: lights
+        var testLight = new THREE.PointLight(0xff0000, 2, 100);
+        testLight.position.set(1, 1.5, 2);
+        scene.add(testLight);
+
+
+        // TEST: custom program (default vertex + custom fragment)
+        var material = new THREE.ShaderMaterial({
+            vertexShader: defaultVS,
+            fragmentShader: testFS
+        });
+
+
+
+        // init scene with gltf model
         var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
+        //var url = "models/glTF-duck/duck.gltf";
         glTFLoader.load(url, function (gltf) {
             scene.add(gltf.scene);
+
 
             //render();
             update();
@@ -131,14 +146,16 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     var render = FPR.render = function () {
-        if (renderer) {
+        //if (renderer) {
             renderer.render(scene, camera);
-        }
+        //}
         
     };
 
     var update = function() {
         controls.update();
+
+        //THREE.glTFShaders.update(scene, camera);
 
         stats.end();
         stats.begin();
