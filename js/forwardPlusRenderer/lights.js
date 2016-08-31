@@ -8,7 +8,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     // Lights
 
     // TODO: Edit if you want to change the light initial positions
-    var light = FPR.lights = [];
+    var lights = FPR.lights = [];
 
     var light_min = [-14, 0, -6];
     var light_max = [14, 18, 6];
