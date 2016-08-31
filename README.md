@@ -24,3 +24,7 @@ project, and we will not be able to grade you without a good README.
 
 This assignment has a considerable amount of performance analysis compared
 to implementation work. Complete the implementation early to leave time!
+
+### Credits
+
+* [minimal-gltf-loader](https://github.com/shrekshao/minimal-gltf-loader) by [@shrekshao](https://github.com/shrekshao)
