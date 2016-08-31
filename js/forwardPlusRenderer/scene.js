@@ -125,7 +125,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                     // assume they all has such properties
                     var posInfo = primitive.attributes[primitive.technique.parameters['position'].semantic];
                     var norInfo = primitive.attributes[primitive.technique.parameters['normal'].semantic];
-                    var uvInfo = primitive.attributes[primitive.technique.parameters['texcoord0'].semantic];
+                    //var uvInfo = primitive.attributes[primitive.technique.parameters['texcoord0'].semantic];
+                    var uvInfo = primitive.technique.parameters['texcoord0'] 
+                        ? primitive.attributes[primitive.technique.parameters['texcoord0'].semantic] 
+                        : {size: 3, type: posInfo.type, stride: 0, offset: 0};
+
+                    var colmap = webGLTextures[colorTextureID] ? webGLTextures[colorTextureID].texture : null;
 
                     primitives.push({
                         gltf: primitive,
@@ -143,10 +148,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                         uvInfo: uvInfo,
 
                         // specific textures temp test
-                        colmap: webGLTextures[colorTextureID].texture,
+                        //colmap: webGLTextures[colorTextureID].texture,
+                        colmap: colmap,
                         //,normap: tex2
 
-                        modelMatrix: primitive.matrix
+                        matrix: primitive.matrix
                     });
 
                 }

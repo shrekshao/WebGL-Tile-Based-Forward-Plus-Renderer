@@ -18,7 +18,8 @@ varying vec3 v_normal;
 varying vec2 v_uv;
 
 void main() {
-    v_normal = u_inverseTransposeModelViewMatrix * a_normal;
+    v_normal = normalize(u_inverseTransposeModelViewMatrix * a_normal);
+    //v_normal = a_normal;
     v_uv = a_uv;
 
     gl_Position = u_projectionMatrix * u_modelViewMatrix * vec4(a_position, 1.0);

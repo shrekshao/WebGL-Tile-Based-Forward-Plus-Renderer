@@ -29,6 +29,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var MV = mat4.create();
     var MVNormal = mat3.create();
 
+    // temp test
+    modelMatrix[0] = 0.1;
+    modelMatrix[5] = 0.1;
+    modelMatrix[10] = 0.1;
+
 
     var canvas;
     var width;
@@ -130,7 +135,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         // init scene with gltf model
         //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
-        var url = "models/glTF-duck/duck.gltf";
+        //var url = "models/glTF-duck/duck.gltf";
+        var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
 
 
@@ -146,8 +152,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     // };
 
-
-
+    var localMV = mat4.create();
 
     FPR.pass.forward.render = function () {
         var self = FPR.pass.forward;
@@ -159,9 +164,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // uniform
-        gl.uniformMatrix4fv(self.u_modelViewMatrix, false, MV);
+        
         gl.uniformMatrix4fv(self.u_projectionMatrix, false, projectionMatrix);
-        gl.uniformMatrix3fv(self.u_inverseTransposeModelViewMatrix, false, MVNormal);
+
+        
         
 
         var i, p;
@@ -171,8 +177,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             // TODO: optimize for only one primitive: bind buffer only once
 
-            // TODO: model matrix for multi hierachy
+            // model matrix for multi hierachy glTF
+            mat4.multiply(localMV, MV, p.matrix);
+            gl.uniformMatrix4fv(self.u_modelViewMatrix, false, localMV);
 
+            mat3.fromMat4(MVNormal, localMV);
+            mat3.invert(MVNormal, MVNormal);
+            mat3.transpose(MVNormal, MVNormal);
+            gl.uniformMatrix3fv(self.u_inverseTransposeModelViewMatrix, false, MVNormal);
 
 
 
@@ -213,9 +225,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         camera.matrixWorldInverse.getInverse(camera.matrixWorld);   // viewMatrix
 
         mat4.multiply(MV, viewMatrix, modelMatrix);
-        mat3.fromMat4(MVNormal, MV);
-        mat3.invert(MVNormal, MVNormal);
-        mat3.transpose(MVNormal, MVNormal);
+        
 
         //cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
 
