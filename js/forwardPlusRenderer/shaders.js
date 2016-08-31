@@ -50,8 +50,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         var gl = FPR.gl;
         loadShaderProgram(gl, 'glsl/forward.vert.glsl', 'glsl/forward.frag.glsl',
             function(prog) {
+
                 // Create an object to hold info about this shader program
                 var p = FPR.pass.forward;
+
+                p.program = prog;
 
                 // Retrieve the uniform and attribute locations
                 p.u_modelViewMatrix = gl.getUniformLocation(prog, 'u_modelViewMatrix');
@@ -60,6 +63,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                 p.a_position  = gl.getAttribLocation(prog, 'a_position');
                 p.a_normal    = gl.getAttribLocation(prog, 'a_normal');
                 p.a_uv        = gl.getAttribLocation(prog, 'a_uv');
+
+                console.log("Shader Loaded: Forward");
 
             });
 

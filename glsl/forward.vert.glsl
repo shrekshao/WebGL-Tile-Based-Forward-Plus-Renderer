@@ -10,10 +10,10 @@ uniform mat4 u_projectionMatrix;
 
 attribute vec3 a_position;
 attribute vec3 a_normal;
-attribute vec3 a_uv;
+attribute vec2 a_uv;
 
 varying vec3 v_normal;
-varying vec3 v_uv;
+varying vec2 v_uv;
 
 void main() {
     v_normal = a_normal;

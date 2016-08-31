@@ -4,11 +4,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var FPR = ForwardPlusRenderer;
     var scene = ForwardPlusRenderer.scene = {};
-    var primitives = FPR.primitives = [];
+    var primitives = scene.primitives = [];
 
     var glTFLoader;
 
-    scene.loadGLTF = function (url) {
+    scene.loadGLTF = function (url, callback) {
 
         var gl = FPR.gl;
 
@@ -128,14 +128,19 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                     var uvInfo = primitive.attributes[primitive.technique.parameters['texcoord0'].semantic];
 
                     primitives.push({
+                        gltf: primitive,
+
                         indicesBuffer: indicesBuffer,
                         numIndices: indices.length,
 
 
                         attributesBuffer: vertexBuffer,
-                        posInfo: {size: posInfo.size, type: posInfo.type, stride: posInfo.stride, offset: posInfo.offset},
-                        norInfo: {size: norInfo.size, type: norInfo.type, stride: norInfo.stride, offset: norInfo.offset},
-                        uvInfo: {size: uvInfo.size, type: uvInfo.type, stride: uvInfo.stride, offset: uvInfo.offset},
+                        // posInfo: {size: posInfo.size, type: posInfo.type, stride: posInfo.stride, offset: posInfo.offset},
+                        // norInfo: {size: norInfo.size, type: norInfo.type, stride: norInfo.stride, offset: norInfo.offset},
+                        // uvInfo: {size: uvInfo.size, type: uvInfo.type, stride: uvInfo.stride, offset: uvInfo.offset},
+                        posInfo: posInfo,
+                        norInfo: norInfo, 
+                        uvInfo: uvInfo,
 
                         // specific textures temp test
                         colmap: webGLTextures[colorTextureID].texture,
@@ -149,7 +154,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             }
 
 
-            
+            callback(glTF);
         });
 
     }

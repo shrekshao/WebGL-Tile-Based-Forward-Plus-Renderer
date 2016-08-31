@@ -36,7 +36,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     // stats.js
-    var stats = FPR.stats;
+    var stats;
 
 
     // Lights
@@ -91,10 +91,13 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl = FPR.gl = canvas.getContext( 'webgl', { antialias: true } );
 
+        gl.clearColor(0, 0, 0, 1);
+        gl.enable(gl.DEPTH_TEST);
+
         FPR.initShaders();
         FPR.initStats();
 
-        
+
 
         camera = new THREE.PerspectiveCamera(
             45,             // Field of view
@@ -124,15 +127,69 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         });
 
 
-
-
-        // load shaders
-
     };
 
-    var render = FPR.render = function () {
 
+
+    // FPR.forward.setupProgram = function () {
+
+    // };
+
+
+
+
+    FPR.pass.forward.render = function () {
+        var self = FPR.pass.forward;
+
+        // use program
+        gl.useProgram(self.program);
+
+        
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        // uniform
+        gl.uniformMatrix4fv(self.u_modelViewMatrix, false, camera.matrixWorldInverse.elements);
+        gl.uniformMatrix4fv(self.u_projectionMatrix, false, camera.projectionMatrix.elements);
+
+        var i, p;
+        var scene = FPR.scene;
+        for (i = 0; i < scene.primitives.length; i++) {
+            p = scene.primitives[i];
+
+            // TODO: optimize for only one primitive: bind buffer only once
+
+            // TODO: model matrix for multi hierachy
+
+
+
+
+            // bind buffer
+            gl.bindBuffer(gl.ARRAY_BUFFER, p.attributesBuffer);
+
+            gl.enableVertexAttribArray(self.a_position);
+            gl.vertexAttribPointer(self.a_position, p.posInfo.size, p.posInfo.type, false, p.posInfo.stride, p.posInfo.offset);
+
+            gl.enableVertexAttribArray(self.a_normal);
+            gl.vertexAttribPointer(self.a_normal, p.norInfo.size, p.norInfo.type, false, p.norInfo.stride, p.norInfo.offset);
+
+            gl.enableVertexAttribArray(self.a_uv);
+            gl.vertexAttribPointer(self.a_uv, p.uvInfo.size, p.uvInfo.type, false, p.uvInfo.stride, p.uvInfo.offset);
+
+
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, p.indicesBuffer);
+
+            // draw
+            gl.drawElements(p.gltf.mode, p.gltf.indices.length, p.gltf.indicesComponentType, 0);
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, null);
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+        }
     };
+
+
+
+
 
     var update = function() {
         // get mouse input info from Three::Controls
@@ -141,13 +198,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // update camera 
         camera.updateMatrixWorld();
         camera.matrixWorldInverse.getInverse(camera.matrixWorld);   // viewMatrix
-        cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+        //cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
 
 
-        stats.end();
-        stats.begin();
+        FPR.stats.end();
+        FPR.stats.begin();
 
-        render();
+        //temp
+        FPR.pass.forward.render();
 
         //if (!aborted) {
             requestAnimationFrame(update);
