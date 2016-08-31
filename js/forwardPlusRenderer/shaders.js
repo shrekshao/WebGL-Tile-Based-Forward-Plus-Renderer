@@ -4,6 +4,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var FPR = ForwardPlusRenderer;
     
+
+    // TODO: didn't find Kai's code that is checking shaders are all loaded
+    // Should add that
+
     var numRequest = 0;
     var numLoaded = 0;
 
@@ -58,6 +62,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
                 // Retrieve the uniform and attribute locations
                 p.u_modelViewMatrix = gl.getUniformLocation(prog, 'u_modelViewMatrix');
+                p.u_inverseTransposeModelViewMatrix = gl.getUniformLocation(prog, 'u_inverseTransposeModelViewMatrix');
                 p.u_projectionMatrix    = gl.getUniformLocation(prog, 'u_projectionMatrix');
 
                 p.a_position  = gl.getAttribLocation(prog, 'a_position');

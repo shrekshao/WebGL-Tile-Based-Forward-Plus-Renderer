@@ -22,6 +22,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var camera;
     var controls;
 
+    var projectionMatrix;
+    var viewMatrix;
+    var modelMatrix = mat4.create();
+
+    var MV = mat4.create();
+    var MVNormal = mat3.create();
+
+
     var canvas;
     var width;
     var height;
@@ -106,6 +114,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             100             // Far plane
         );
         camera.position.set(-15.5, 1, -1);
+        projectionMatrix = camera.projectionMatrix.elements;
+        viewMatrix = camera.matrixWorldInverse.elements;
+
 
         controls = new THREE.OrbitControls(camera, canvas);
         controls.enableDamping = true;
@@ -148,8 +159,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         // uniform
-        gl.uniformMatrix4fv(self.u_modelViewMatrix, false, camera.matrixWorldInverse.elements);
-        gl.uniformMatrix4fv(self.u_projectionMatrix, false, camera.projectionMatrix.elements);
+        gl.uniformMatrix4fv(self.u_modelViewMatrix, false, MV);
+        gl.uniformMatrix4fv(self.u_projectionMatrix, false, projectionMatrix);
+        gl.uniformMatrix3fv(self.u_inverseTransposeModelViewMatrix, false, MVNormal);
+        
 
         var i, p;
         var scene = FPR.scene;
@@ -189,7 +202,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
 
-
+    //var tempMat3 = mat3.create();
 
     var update = function() {
         // get mouse input info from Three::Controls
@@ -198,6 +211,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // update camera 
         camera.updateMatrixWorld();
         camera.matrixWorldInverse.getInverse(camera.matrixWorld);   // viewMatrix
+
+        mat4.multiply(MV, viewMatrix, modelMatrix);
+        mat3.fromMat4(MVNormal, MV);
+        mat3.invert(MVNormal, MVNormal);
+        mat3.transpose(MVNormal, MVNormal);
+
         //cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
 
 
