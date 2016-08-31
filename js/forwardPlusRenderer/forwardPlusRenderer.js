@@ -52,43 +52,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var stats;
 
 
-    // Lights
-
-    // TODO: Edit if you want to change the light initial positions
-    var light = FPR.lights = [];
-
-    FPR.light_min = [-14, 0, -6];
-    FPR.light_max = [14, 18, 6];
-    FPR.light_dt = -0.03;
-    FPR.LIGHT_RADIUS = 4.0;
-    FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
-    
-    function _initLights() {
-        Math.seedrandom(0);
-
-        var posfn = function() {
-            var r = [0, 0, 0];
-            for (var i = 0; i < 3; i++) {
-                var mn = FPR.light_min[i];
-                var mx = FPR.light_max[i];
-                r[i] = Math.random() * (mx - mn) + mn;
-            }
-            return r;
-        };
-
-        for (var i = 0; i < FPR.NUM_LIGHTS; i++) {
-            lights.push({
-                pos: posfn(),
-                col: [
-                    1 + Math.random(),
-                    1 + Math.random(),
-                    1 + Math.random()],
-                rad: FPR.LIGHT_RADIUS
-            });
-        }
-    }
-
-
     
     /**
      * Global init
@@ -109,6 +72,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         FPR.initShaders();
         FPR.initStats();
+        FPR.initLights();
 
 
 
