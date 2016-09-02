@@ -12,6 +12,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         forward: {}
     };
 
+    var curPass = FPR.curPass = FPR.pass.forward;
+
 
     // var renderer;
     // var model;
@@ -30,9 +32,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var MVNormal = mat3.create();
 
     // temp test
-    modelMatrix[0] = 0.1;
-    modelMatrix[5] = 0.1;
-    modelMatrix[10] = 0.1;
+    modelMatrix[0] = 0.01;
+    modelMatrix[5] = 0.01;
+    modelMatrix[10] = 0.01;
 
 
     var canvas;
@@ -44,7 +46,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var resize = FPR.resize = function() {
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
+        //renderer.setSize(width, height);
         render();
     };
 
@@ -111,31 +113,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
 
-
-    // FPR.forward.setupProgram = function () {
-
-    // };
-
     var localMV = mat4.create();
 
-    FPR.pass.forward.render = function () {
-        var self = FPR.pass.forward;
 
+    var render = FPR.render = function (pass) {
         // use program
-        gl.useProgram(self.program);
+        gl.useProgram(pass.program);
 
-        
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        // uniform
-        
-        gl.uniformMatrix4fv(self.u_projectionMatrix, false, projectionMatrix);
-
-        
-        
+        // uniform: projection Matrix
+        gl.uniformMatrix4fv(pass.u_projectionMatrix, false, projectionMatrix);
 
         var i, p;
         var scene = FPR.scene;
+
         for (i = 0; i < scene.primitives.length; i++) {
             p = scene.primitives[i];
 
@@ -143,27 +135,32 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             // model matrix for multi hierachy glTF
             mat4.multiply(localMV, MV, p.matrix);
-            gl.uniformMatrix4fv(self.u_modelViewMatrix, false, localMV);
+            gl.uniformMatrix4fv(pass.u_modelViewMatrix, false, localMV);
 
             mat3.fromMat4(MVNormal, localMV);
             mat3.invert(MVNormal, MVNormal);
             mat3.transpose(MVNormal, MVNormal);
-            gl.uniformMatrix3fv(self.u_inverseTransposeModelViewMatrix, false, MVNormal);
+            gl.uniformMatrix3fv(pass.u_inverseTransposeModelViewMatrix, false, MVNormal);
 
 
 
             // bind buffer
             gl.bindBuffer(gl.ARRAY_BUFFER, p.attributesBuffer);
 
-            gl.enableVertexAttribArray(self.a_position);
-            gl.vertexAttribPointer(self.a_position, p.posInfo.size, p.posInfo.type, false, p.posInfo.stride, p.posInfo.offset);
-
-            gl.enableVertexAttribArray(self.a_normal);
-            gl.vertexAttribPointer(self.a_normal, p.norInfo.size, p.norInfo.type, false, p.norInfo.stride, p.norInfo.offset);
-
-            gl.enableVertexAttribArray(self.a_uv);
-            gl.vertexAttribPointer(self.a_uv, p.uvInfo.size, p.uvInfo.type, false, p.uvInfo.stride, p.uvInfo.offset);
-
+            if (pass.a_position !== undefined) {
+                gl.enableVertexAttribArray(pass.a_position);
+                gl.vertexAttribPointer(pass.a_position, p.posInfo.size, p.posInfo.type, false, p.posInfo.stride, p.posInfo.offset);
+            }
+            
+            if (pass.a_normal !== undefined) {
+                gl.enableVertexAttribArray(pass.a_normal);
+                gl.vertexAttribPointer(pass.a_normal, p.norInfo.size, p.norInfo.type, false, p.norInfo.stride, p.norInfo.offset);
+            }
+            
+            if (pass.a_uv !== undefined) {
+                gl.enableVertexAttribArray(pass.a_uv);
+                gl.vertexAttribPointer(pass.a_uv, p.uvInfo.size, p.uvInfo.type, false, p.uvInfo.stride, p.uvInfo.offset);
+            }
 
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, p.indicesBuffer);
@@ -174,11 +171,22 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.bindBuffer(gl.ARRAY_BUFFER, null);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
         }
-    };
+    }
 
 
 
-    //var tempMat3 = mat3.create();
+
+
+    FPR.pass.depthPrepass.render = function () {
+
+    }
+    
+    
+
+
+
+
+    
 
     var update = function() {
         // get mouse input info from Three::Controls
@@ -197,8 +205,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.stats.end();
         FPR.stats.begin();
 
-        //temp
-        FPR.pass.forward.render();
+        //curPass.render();
+        render(curPass);
 
         //if (!aborted) {
             requestAnimationFrame(update);
