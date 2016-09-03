@@ -6,6 +6,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var pass = FPR.pass = {
         depthPrepass: {},
+        depthDebug: {},
         lightCulling: {},
         lightAccumulation: {}, 
 
@@ -13,6 +14,28 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     var curPass = FPR.curPass = FPR.pass.forward;
+
+
+    var quadPositions = new Float32Array([
+        -1.0, -1.0,
+        1.0, -1.0,
+        1.0,  1.0,
+        1.0,  1.0,
+        -1.0,  1.0,
+        -1.0, -1.0
+    ]);
+
+    var quadUVs = new Float32Array([
+        0.0, 1.0,
+        1.0, 1.0,
+        1.0, 0.0,
+        1.0, 0.0,
+        0.0, 0.0,
+        0.0, 1.0
+    ]);
+
+    var quadPositionBuffer;
+    var quadUVBuffer;
 
 
     // var renderer;
@@ -67,16 +90,60 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         width = canvas.width;
         height = canvas.height;
 
-        gl = FPR.gl = canvas.getContext( 'webgl', { antialias: true } );
+        // get gl context
+        var useWebGL2 = false;
+
+        if (useWebGL2) {
+            gl = FPR.gl = canvas.getContext( 'webgl2', { antialias: true } );
+        } else {
+            gl = FPR.gl = canvas.getContext( 'webgl', { antialias: true } );
+        }
+        
+
+        if (!useWebGL2) {
+            // get WEBGL_Depth_Texture extension
+            var depthTextureExt = gl.getExtension("WEBKIT_WEBGL_depth_texture");
+
+            if(!depthTextureExt) { 
+                abort("depth texture not supported in current browser!");
+                return; 
+            }
+        }
+
+
+
 
         gl.clearColor(0, 0, 0, 1);
         gl.enable(gl.DEPTH_TEST);
+        
+        // // test alpha blend
+        // gl.enable(gl.BLEND);
+        // gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+
 
         FPR.initShaders();
         FPR.initStats();
         FPR.initLights();
 
+        FPR.pass.depthPrepass.fboInit();
 
+
+        // renderFullQuad buffer init
+        quadPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadPositionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, quadPositions, gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+        quadUVBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadUVBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, quadUVs, gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+
+
+        // Three.js camera and control module init
+        // We only borrow its mouse control input and camera transformation matrix
+        // We are not using the Three.js scene for rendering
 
         camera = new THREE.PerspectiveCamera(
             45,             // Field of view
@@ -96,7 +163,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         controls.rotateSpeed = 0.3;
         controls.zoomSpeed = 1.0;
         controls.panSpeed = 2.0;
-
 
 
         // init scene with gltf model
@@ -173,12 +239,56 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         }
     }
 
+    var renderFullQuad = FPR.renderFullQuad = function (pass, texture) {
+        // use program
+        gl.useProgram(pass.program);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        if (pass.u_sampler2D !== undefined) {
+            gl.uniform1i(pass.u_sampler2D, 0);
+        }
+
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadPositionBuffer);
+        if (pass.a_position !== undefined) {
+            gl.enableVertexAttribArray(pass.a_position);
+            gl.vertexAttribPointer(pass.a_position, 2, gl.FLOAT, false, 0, 0);
+        }
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, quadUVBuffer);
+        if (pass.a_uv !== undefined) {
+            gl.enableVertexAttribArray(pass.a_uv);
+            gl.vertexAttribPointer(pass.a_uv, 2, gl.FLOAT, false, 0, 0);
+        }
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+    }
 
 
 
+    FPR.pass.depthPrepass.fboInit = function () {
+        console.log("depthPrepass FBO Init");
 
-    FPR.pass.depthPrepass.render = function () {
+        var self = FPR.pass.depthPrepass;
 
+        // Create the depth texture
+        var depthTexture = self.depthTexture = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.DEPTH_COMPONENT, width, height, 0, gl.DEPTH_COMPONENT, gl.UNSIGNED_SHORT, null);
+
+        var framebuffer = self.framebuffer = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
+        //gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, colorTexture, 0);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, depthTexture, 0);
     }
     
     
@@ -206,7 +316,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.stats.begin();
 
         //curPass.render();
-        render(curPass);
+        //render(curPass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        render(FPR.pass.depthPrepass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture);
 
         //if (!aborted) {
             requestAnimationFrame(update);
