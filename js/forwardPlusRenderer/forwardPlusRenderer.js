@@ -26,12 +26,19 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     ]);
 
     var quadUVs = new Float32Array([
-        0.0, 1.0,
-        1.0, 1.0,
-        1.0, 0.0,
-        1.0, 0.0,
+        // 0.0, 1.0,
+        // 1.0, 1.0,
+        // 1.0, 0.0,
+        // 1.0, 0.0,
+        // 0.0, 0.0,
+        // 0.0, 1.0
+        
         0.0, 0.0,
-        0.0, 1.0
+        1.0, 0.0,
+        1.0, 1.0, 
+        1.0, 1.0, 
+        0.0, 1.0, 
+        0.0, 0.0
     ]);
 
     var quadPositionBuffer;
@@ -231,8 +238,17 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, p.indicesBuffer);
 
+
+            if (pass.fboBind !== undefined) {
+                pass.fboBind();
+            }
+
             // draw
             gl.drawElements(p.gltf.mode, p.gltf.indices.length, p.gltf.indicesComponentType, 0);
+
+            if (pass.fboBind !== undefined) {
+                gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            }
 
             gl.bindBuffer(gl.ARRAY_BUFFER, null);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
@@ -282,16 +298,19 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.DEPTH_COMPONENT, width, height, 0, gl.DEPTH_COMPONENT, gl.UNSIGNED_SHORT, null);
+        gl.bindTexture(gl.TEXTURE_2D, null);
 
         var framebuffer = self.framebuffer = gl.createFramebuffer();
         gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
         //gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, colorTexture, 0);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, depthTexture, 0);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     }
     
-    
+    FPR.pass.depthPrepass.fboBind = function () {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+    }
 
 
 
@@ -314,14 +333,15 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         FPR.stats.end();
         FPR.stats.begin();
-
-        //curPass.render();
+        
         //render(curPass);
+
         gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
         render(FPR.pass.depthPrepass);
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture);
+
 
         //if (!aborted) {
             requestAnimationFrame(update);
