@@ -98,7 +98,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             });
 
-        // Depth prepass
+        // Depth debug
         loadShaderProgram(gl, 'glsl/depthDebug.vert.glsl', 'glsl/depthDebug.frag.glsl',
             function(prog) {
 
@@ -110,6 +110,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                 // Retrieve the uniform and attribute locations
                 
                 p.u_sampler2D = gl.getUniformLocation(prog, 'u_depthTexture');
+                // p.u_near = gl.getUniformLocation(prog, 'u_near');
+                // p.u_far = gl.getUniformLocation(prog, 'u_far');
 
                 p.a_position  = gl.getAttribLocation(prog, 'a_position');
                 p.a_uv        = gl.getAttribLocation(prog, 'a_uv');

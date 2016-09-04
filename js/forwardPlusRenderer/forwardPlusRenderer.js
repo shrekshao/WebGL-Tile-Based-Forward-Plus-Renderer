@@ -54,6 +54,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var camera;
     var controls;
 
+    var near = 1;
+    var far = 1000;
+
     var projectionMatrix;
     var viewMatrix;
     var modelMatrix = mat4.create();
@@ -155,8 +158,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         camera = new THREE.PerspectiveCamera(
             45,             // Field of view
             width / height, // Aspect ratio
-            1.0,            // Near plane
-            100             // Far plane
+            near,            // Near plane
+            far             // Far plane
         );
         camera.position.set(-15.5, 1, -1);
         projectionMatrix = camera.projectionMatrix.elements;
@@ -255,6 +258,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         }
     }
 
+    var uniformDirty = true;
     var renderFullQuad = FPR.renderFullQuad = function (pass, texture) {
         // use program
         gl.useProgram(pass.program);
@@ -262,9 +266,23 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        if (pass.u_sampler2D !== undefined) {
-            gl.uniform1i(pass.u_sampler2D, 0);
+
+        if (uniformDirty) {
+            uniformDirty = false;
+
+            if (pass.u_sampler2D !== undefined) {
+                gl.uniform1i(pass.u_sampler2D, 0);
+            }
+
+            // if (pass.u_near !== undefined) {
+            //     gl.uniform1f(pass.u_near, near);
+            // }
+
+            // if (pass.u_far !== undefined) {
+            //     gl.uniform1f(pass.u_far, far);
+            // }
         }
+        
 
 
         gl.bindBuffer(gl.ARRAY_BUFFER, quadPositionBuffer);
