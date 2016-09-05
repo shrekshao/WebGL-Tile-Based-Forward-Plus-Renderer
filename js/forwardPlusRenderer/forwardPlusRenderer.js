@@ -101,7 +101,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         height = FPR.height = canvas.height;
 
         // get gl context
-        var useWebGL2 = false;
+        //var useWebGL2 = false;
+        //var useWebGL2 = true;
+        
+        // static, shouldn't change 
+        var useWebGL2 = FPR.useWebGL2 = true;
 
         if (useWebGL2) {
             gl = FPR.gl = canvas.getContext( 'webgl2', { antialias: true } );
