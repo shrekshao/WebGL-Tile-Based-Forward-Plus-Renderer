@@ -135,9 +135,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
 
 
-        FPR.initShaders();
-        FPR.initStats();
-        FPR.initLights();
+        FPR.shader.init();
+        FPR.stats.init();
+        FPR.light.init();
 
         FPR.pass.depthPrepass.fboInit();
 

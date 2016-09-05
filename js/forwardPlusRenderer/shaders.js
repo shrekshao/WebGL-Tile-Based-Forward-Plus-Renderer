@@ -3,6 +3,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     'use strict';
 
     var FPR = ForwardPlusRenderer;
+    FPR.shader = {};
     
 
     // TODO: didn't find Kai's code that is checking shaders are all loaded
@@ -11,7 +12,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var numRequest = 0;
     var numLoaded = 0;
 
-    var loadShaderProgram = FPR.loadShaderProgram = (function() {
+    var loadShaderProgram = FPR.shader.loadShaderProgram = (function() {
 
         var gl = FPR.gl;
 
@@ -50,7 +51,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     })();
     
 
-    FPR.initShaders = function () {
+    FPR.shader.init = function () {
         var gl = FPR.gl;
 
         // Forward

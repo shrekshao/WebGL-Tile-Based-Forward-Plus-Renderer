@@ -3,12 +3,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     'use strict';
 
     var FPR = ForwardPlusRenderer;
-
+    FPR.light = {};
 
     // Lights
 
     // TODO: Edit if you want to change the light initial positions
-    var lights = FPR.lights = [];
+    var lights = FPR.light.lights = [];
 
     var light_min = [-14, 0, -6];
     var light_max = [14, 18, 6];
@@ -16,7 +16,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var LIGHT_RADIUS = 4.0;
     var NUM_LIGHTS = 20; // TODO: test with MORE lights!
     
-    FPR.initLights = function () {
+    FPR.light.init = function () {
         Math.seedrandom(0);
 
         var posfn = function() {
@@ -39,9 +39,18 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                 rad: LIGHT_RADIUS
             });
         }
+
+        //var lightUniformBuffer = FPR.lightUniformBuffer = gl.createBuffer();
+
     }
 
-    // TODO: switch to WebGL 2 and use uniform buffer for lights?
+    FPR.light.update = function () {
+
+    }
+
+
+
+    
 
 
 })();

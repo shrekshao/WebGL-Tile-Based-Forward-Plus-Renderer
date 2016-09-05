@@ -3,9 +3,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     'use strict';
 
     var FPR = ForwardPlusRenderer;
+    
     var stats;
-
-    FPR.initStats = function() {
+    
+    FPR.stats = {};
+    
+    FPR.stats.init = function() {
         stats = FPR.stats = new Stats();
         stats.setMode(0); // 0: fps, 1: ms, 2: mb
         stats.domElement.style.position = 'absolute';
