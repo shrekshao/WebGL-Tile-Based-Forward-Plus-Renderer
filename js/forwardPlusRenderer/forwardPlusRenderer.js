@@ -13,6 +13,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         forward: {}
     };
 
+    FPR.glTextureId = {
+        depth: 4, 
+
+        lightIndex: 5,
+        lightPosition: 6,
+        lightColorRadius: 7,
+    };
+
     var curPass = FPR.curPass = FPR.pass.forward;
 
 
@@ -99,10 +107,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         canvas = document.getElementById('canvas');
         width = FPR.width = canvas.width;
         height = FPR.height = canvas.height;
-
-        // get gl context
-        //var useWebGL2 = false;
-        //var useWebGL2 = true;
         
         // static, shouldn't change 
         //var useWebGL2 = FPR.useWebGL2 = true;
@@ -123,9 +127,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                 abort("depth texture not supported in current browser!");
                 return; 
             }
+
+            gl.getExtension('OES_texture_float_linear');
+            gl.getExtension('OES_texture_float');
         }
-
-
 
 
         gl.clearColor(0, 0, 0, 1);
@@ -264,12 +269,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     }
 
     var uniformDirty = true;
-    var renderFullQuad = FPR.renderFullQuad = function (pass, texture) {
+    var renderFullQuad = FPR.renderFullQuad = function (pass, texture, tid) {
         // use program
         gl.useProgram(pass.program);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        var tid = 4;
         gl.activeTexture(gl.TEXTURE0 + tid);
         gl.bindTexture(gl.TEXTURE_2D, texture);
 
@@ -310,30 +314,32 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
     var update = function() {
+
+        FPR.stats.end();
+
         // get mouse input info from Three::Controls
         controls.update();
 
         // update camera 
         camera.updateMatrixWorld();
         camera.matrixWorldInverse.getInverse(camera.matrixWorld);   // viewMatrix
-
         mat4.multiply(MV, viewMatrix, modelMatrix);
         
+        // update lights and light buffers (Texture if using WebGL 1)
+        FPR.light.update();
 
-        //cameraMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-
-
-        FPR.stats.end();
-        FPR.stats.begin();
-        
-        //render(curPass);
 
         gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
         render(FPR.pass.depthPrepass);
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture);
+        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture, FPR.glTextureId.depth);
 
+
+
+
+
+        FPR.stats.begin();
 
         //if (!aborted) {
             requestAnimationFrame(update);
