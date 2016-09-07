@@ -105,7 +105,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         //var useWebGL2 = true;
         
         // static, shouldn't change 
-        var useWebGL2 = FPR.useWebGL2 = true;
+        //var useWebGL2 = FPR.useWebGL2 = true;
+        var useWebGL2 = FPR.useWebGL2 = false;
 
         if (useWebGL2) {
             gl = FPR.gl = canvas.getContext( 'webgl2', { antialias: true } );
@@ -268,14 +269,15 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.useProgram(pass.program);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        gl.activeTexture(gl.TEXTURE0);
+        var tid = 4;
+        gl.activeTexture(gl.TEXTURE0 + tid);
         gl.bindTexture(gl.TEXTURE_2D, texture);
 
         if (uniformDirty) {
             uniformDirty = false;
 
             if (pass.u_sampler2D !== undefined) {
-                gl.uniform1i(pass.u_sampler2D, 0);
+                gl.uniform1i(pass.u_sampler2D, tid);
             }
 
             // if (pass.u_near !== undefined) {
