@@ -33,7 +33,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         var b;
         for (var i = 0; i < NUM_LIGHTS; i++) {
+            // index
+            lightIndex[i] = i;
+
             b = 3 * i;
+
             // pos
             lightPosition[b + 0] = posfn(0);
             lightPosition[b + 1] = posfn(1);
@@ -109,25 +113,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     }
 
     FPR.light.update = function () {
-        
-
-        // gl.activeTexture(gl.TEXTURE5);
-        // gl.bindTexture(gl.TEXTURE_2D, lightIndexTex);   
-        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, lightIndexWidth, lightIndexWidth, 0, gl.LUMINANCE, gl.FLOAT, new Float32Array(lightIndex));       
-        // gl.uniform1i(gl.getUniformLocation(program, "u_LightIndextex"),5);
-
-
-        // gl.activeTexture(gl.TEXTURE6);
-        // gl.bindTexture(gl.TEXTURE_2D, lightPositionTex);
-        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, lightPosition.length/3, 1.0, 0, gl.RGB, gl.FLOAT, new Float32Array(lightPosition));       
-        // gl.uniform1i(gl.getUniformLocation(program, "u_LightPositiontex"),6);
-
-
-        // gl.activeTexture(gl.TEXTURE7);
-        // gl.bindTexture(gl.TEXTURE_2D, lightColorRadiusTex);
-        // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, lightColorRadius.length/4, 1.0, 0, gl.RGBA, gl.FLOAT, new Float32Array(lightColorRadius));
-        // gl.uniform1i(gl.getUniformLocation(program, "u_LightColorRadiustex"),7);
-
         var b;
         for (var i = 0; i < NUM_LIGHTS; i++) {
             b = 3 * i;
@@ -155,6 +140,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                             gl.RGB, 
                             gl.FLOAT, 
                             lightPosition);
+            gl.bindTexture(gl.TEXTURE_2D, null);
         }
     }
 

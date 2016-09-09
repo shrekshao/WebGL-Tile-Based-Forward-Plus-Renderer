@@ -4,8 +4,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var FPR = ForwardPlusRenderer;
 
-    FPR.pass.depthPrepass.fboInit = function () {
-        console.log("depthPrepass FBO Init");
+    FPR.pass.depthPrepass.init = function () {
+        console.log("depthPrepass Init");
 
         var gl = FPR.gl;
         var width = FPR.width;
@@ -35,12 +35,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         //gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, colorTexture, 0);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, depthTexture, 0);
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    }
+    };
     
     FPR.pass.depthPrepass.fboBind = function () {
         var gl = FPR.gl;
         gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-    }
+    };
 
 
 })();

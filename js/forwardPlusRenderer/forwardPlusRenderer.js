@@ -4,7 +4,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var FPR = ForwardPlusRenderer;
 
-    var pass = FPR.pass = {
+    var pass = FPR.pass = FPR.pass || {
         depthPrepass: {},
         depthDebug: {},
         lightCulling: {},
@@ -19,6 +19,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         lightIndex: 5,
         lightPosition: 6,
         lightColorRadius: 7,
+
+        tile: 8
     };
 
     var curPass = FPR.curPass = FPR.pass.forward;
@@ -145,7 +147,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.stats.init();
         FPR.light.init();
 
-        FPR.pass.depthPrepass.fboInit();
+        FPR.pass.depthPrepass.init();
+        FPR.pass.lightCulling.init();
 
 
         // renderFullQuad buffer init
@@ -266,7 +269,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.bindBuffer(gl.ARRAY_BUFFER, null);
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
         }
-    }
+    };
 
     var uniformDirty = true;
     var renderFullQuad = FPR.renderFullQuad = function (pass, texture, tid) {
@@ -310,7 +313,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.drawArrays(gl.TRIANGLES, 0, 6);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
-    }
+    };
 
 
     var update = function() {
