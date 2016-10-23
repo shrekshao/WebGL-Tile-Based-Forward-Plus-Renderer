@@ -121,6 +121,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             });
 
+
+        // light Culling
+        loadShaderProgram(gl, 'glsl/lightCulling.vert.glsl', 'glsl/lightCulling.frag.glsl',
+            FPR.pass.lightCulling.loadShaderProgramCallback);
+
     }
 
 })();

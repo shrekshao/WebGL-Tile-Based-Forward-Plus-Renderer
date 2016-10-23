@@ -9,18 +9,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     // TODO: Edit if you want to change the light initial positions
     
-    var lightPos = FPR.light.lightPos 
+    var lightPos = FPR.light.lightPos;
 
     var lightPosMin = [-14, 0, -6];
     var lightPosMax = [14, 18, 6];
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
     var LIGHT_RADIUS = 4.0;
-    var NUM_LIGHTS = 20; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
 
     var lightIndex = FPR.light.index = new Float32Array(NUM_LIGHTS);    // WebGL 1 doesn't support integer texture
     var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
     var lightColorRadius = FPR.light.colorRadius = new Float32Array(NUM_LIGHTS * 4);
+
+    var lightTextureSideLength = 32;
+
     
     FPR.light.init = function () {
         Math.seedrandom(0);
@@ -63,7 +66,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             // use Texture to store lights info
 
             var lightIndexTexId = FPR.glTextureId.lightIndex;
-            gl.activeTexture(gl.TEXTURE0 + lightIndexTexId);
+            // gl.activeTexture(gl.TEXTURE0 + lightIndexTexId);
             FPR.light.indexTexture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, FPR.light.indexTexture);
             gl.texImage2D(gl.TEXTURE_2D, 
@@ -77,7 +80,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                             lightIndex);
 
             var lightPositionTexId = FPR.glTextureId.lightPosition;
-            gl.activeTexture(gl.TEXTURE0 + lightPositionTexId);
+            // gl.activeTexture(gl.TEXTURE0 + lightPositionTexId);
             FPR.light.positionTexture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
             gl.texImage2D(gl.TEXTURE_2D, 
@@ -91,14 +94,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                             lightPosition);
 
             var lightColorRadiusTexId = FPR.glTextureId.lightColorRadius;
-            gl.activeTexture(gl.TEXTURE0 + lightColorRadiusTexId);
+            // gl.activeTexture(gl.TEXTURE0 + lightColorRadiusTexId);
             FPR.light.colorRadiusTexture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, FPR.light.colorRadiusTexture);
             gl.texImage2D(gl.TEXTURE_2D, 
                             0, 
                             gl.RGBA, 
                             NUM_LIGHTS, 
-                            1.0, 
+                            1, 
                             0, 
                             gl.RGBA, 
                             gl.FLOAT, 
@@ -130,6 +133,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             // TODO: use uniform buffer to store lights 
         } else {
             // WebGL 1
+            // use texuture as uniform buffer
             gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
             gl.texSubImage2D(gl.TEXTURE_2D, 
                             0, 

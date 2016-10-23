@@ -20,11 +20,15 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         lightPosition: 6,
         lightColorRadius: 7,
 
-        tile: 8
+        tileLights: 8,
+        tileFrustumPlanes: 9
     };
 
-    var curPass = FPR.curPass = FPR.pass.forward;
+    // // var curPass = FPR.curPass = FPR.pass.forward;
+    // var modes = ["forward", "depth-debug", "forward+"];
+    // var mode = "depth-debug"; 
 
+    
 
     var quadPositions = new Float32Array([
         -1.0, -1.0,
@@ -152,12 +156,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
         // renderFullQuad buffer init
-        quadPositionBuffer = gl.createBuffer();
+        quadPositionBuffer = FPR.quadPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, quadPositionBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, quadPositions, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
-        quadUVBuffer = gl.createBuffer();
+        quadUVBuffer = FPR.quadUVBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, quadUVBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, quadUVs, gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
@@ -316,6 +320,41 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
 
+
+
+    // ------ Render pipeline function objects ---------------
+
+    var depthDebugPipeline = function() {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        render(FPR.pass.depthPrepass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture, FPR.glTextureId.depth);
+    };
+
+    var forwardPipeline = function() {
+        render(FPR.pass.forward);
+    };
+
+    var forwardPlusPipeline = function() {
+
+        // depth prepass
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        render(FPR.pass.depthPrepass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+        FPR.pass.lightCulling.execute();
+
+        // render(FPR.pass.lightAccumulation);
+    };
+
+    // pipeline function handler
+    var curPipeline = forwardPlusPipeline;
+    // var curPipeline = forwardPipeline;
+
+    // ----------------------------------------------------
+
+
     var update = function() {
 
         FPR.stats.end();
@@ -331,16 +370,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // update lights and light buffers (Texture if using WebGL 1)
         FPR.light.update();
 
-
-        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        render(FPR.pass.depthPrepass);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-
-        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture, FPR.glTextureId.depth);
-
-
-
-
+        // execute render pipeline
+        curPipeline();
 
         FPR.stats.begin();
 
