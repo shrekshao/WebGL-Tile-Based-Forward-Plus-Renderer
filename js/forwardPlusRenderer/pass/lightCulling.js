@@ -34,20 +34,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         //gl.uniform1i(gl.getUniformLocation(program, "u_LightGridtex"),4); 
         gl.bindTexture(gl.TEXTURE_2D, null); 
 
-
-        var tileLightsFB = self.tileLightsFB = gl.createFramebuffer();
-        gl.bindFramebuffer(gl.FRAMEBUFFER, tileLightsFB);
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tileLightsTexture, 0);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-
-
-        // frust near and far plane depth
-        // r - near, g - far
+        // left, right, up, bottom, frust near and far plane depth
+        // each is a vec4 representing a plane
         var tileFrustumPlanesTexture = self.tileFrustumPlanesTexture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tileFrustumPlanesTexture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, numTileWidth, numTileHeight, 0, gl.RGB, gl.FLOAT, new Float32Array(numTile * 3));       
         //gl.uniform1i(gl.getUniformLocation(program, "u_LightGridFrustumPlanes"),5); 
         gl.bindTexture(gl.TEXTURE_2D, null);
+
+
+        // bind texture to framebuffer
+
+        var tileLightsFB = self.tileLightsFB = gl.createFramebuffer();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, tileLightsFB);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tileLightsTexture, 0);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         var tileFrustumPlanesFB = self.tileFrustumPlanesFB = gl.createFramebuffer();
         gl.bindFramebuffer(gl.FRAMEBUFFER, tileFrustumPlanesFB);
@@ -109,6 +110,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.depth);
         gl.bindTexture(gl.TEXTURE_2D, FPR.pass.depthPrepass.depthTexture);
 
+        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightIndex);
+        gl.bindTexture(gl.TEXTURE_2D, FPR.light.indexTexture);
+
         gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightPosition);
         gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
 
@@ -126,6 +130,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             // assign one time static uniforms
             gl.uniform1i(this.u_depthTexture, FPR.glTextureId.depth);
+            gl.uniform1i(this.u_lightIndexTexture, FPR.glTextureId.lightIndex);
             gl.uniform1i(this.u_lightPositionTexture, FPR.glTextureId.lightPosition);
             gl.uniform1i(this.u_lightColorRadiusTexture, FPR.glTextureId.lightColorRadius);
             gl.uniform1i(this.u_tileLightsTexture, FPR.glTextureId.tileLights);
