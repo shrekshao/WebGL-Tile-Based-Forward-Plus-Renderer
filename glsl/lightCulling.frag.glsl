@@ -41,7 +41,7 @@ void main() {
     {
     //     // vec3 lightPos = texture2D(u_lightPositionTexture, vec2(lightIdx / float(u_numLights))).xyz;
     //     vec3 lightPos = texture2D(u_lightPositionTexture, vec2(0.5, 2)).xyz;
-        vec3 lightPos = texture2D(u_lightPositionTexture, vec2(threadIdx / float(u_numLights), 0.0)).xyz;
+        vec3 lightPos = texture2D(u_lightPositionTexture, vec2(threadIdx / float(u_numLights), 0.5)).xyz;
 
     //     // if (lightPos.y > 0.5)
     //     // {

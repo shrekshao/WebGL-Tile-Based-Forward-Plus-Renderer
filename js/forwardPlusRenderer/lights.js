@@ -23,12 +23,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var lightTextureSideLength = 32;
     var lightTextureSize = lightTextureSideLength * lightTextureSideLength;
 
-    // var lightIndex = FPR.light.index = new Float32Array(NUM_LIGHTS);    // WebGL 1 doesn't support integer texture
-    // var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
-    // var lightColorRadius = FPR.light.colorRadius = new Float32Array(NUM_LIGHTS * 4);
-    var lightIndex = FPR.light.index = new Float32Array(lightTextureSize);    // WebGL 1 doesn't support integer texture
-    var lightPosition = FPR.light.position = new Float32Array(lightTextureSize * 3);
-    var lightColorRadius = FPR.light.colorRadius = new Float32Array(lightTextureSize * 4);
+    var lightIndex = FPR.light.index = new Float32Array(NUM_LIGHTS);    // WebGL 1 doesn't support integer texture
+    var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
+    var lightColorRadius = FPR.light.colorRadius = new Float32Array(NUM_LIGHTS * 4);
+    // var lightIndex = FPR.light.index = new Float32Array(lightTextureSize);    // WebGL 1 doesn't support integer texture
+    // var lightPosition = FPR.light.position = new Float32Array(lightTextureSize * 3);
+    // var lightColorRadius = FPR.light.colorRadius = new Float32Array(lightTextureSize * 4);
 
     
     FPR.light.init = function () {
@@ -41,29 +41,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         };
 
         var b;
-        // for (var i = 0; i < NUM_LIGHTS; i++) {
-        //     // index
-        //     lightIndex[i] = i;
-
-        //     b = 3 * i;
-
-        //     // pos
-        //     lightPosition[b + 0] = posfn(0);
-        //     lightPosition[b + 1] = posfn(1);
-        //     lightPosition[b + 2] = posfn(2);
-
-        //     // rgb
-        //     lightColorRadius[b + 0] = 1 + Math.random();
-        //     lightColorRadius[b + 1] = 1 + Math.random();
-        //     lightColorRadius[b + 2] = 1 + Math.random();
-        //     // radius
-        //     lightColorRadius[b + 3] = Math.random();
-        // }
-        for (var i = 0; i < lightTextureSize; i++) {
-            if (i >= NUM_LIGHTS) {
-                break;
-            }
-
+        for (var i = 0; i < NUM_LIGHTS; i++) {
             // index
             lightIndex[i] = i;
 
@@ -81,6 +59,28 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             // radius
             lightColorRadius[b + 3] = Math.random();
         }
+        // for (var i = 0; i < lightTextureSize; i++) {
+        //     if (i >= NUM_LIGHTS) {
+        //         break;
+        //     }
+
+        //     // index
+        //     lightIndex[i] = i;
+
+        //     b = 3 * i;
+
+        //     // pos
+        //     lightPosition[b + 0] = posfn(0);
+        //     lightPosition[b + 1] = posfn(1);
+        //     lightPosition[b + 2] = posfn(2);
+
+        //     // rgb
+        //     lightColorRadius[b + 0] = 1 + Math.random();
+        //     lightColorRadius[b + 1] = 1 + Math.random();
+        //     lightColorRadius[b + 2] = 1 + Math.random();
+        //     // radius
+        //     lightColorRadius[b + 3] = Math.random();
+        // }
 
 
         var gl = FPR.gl;
@@ -100,10 +100,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.texImage2D(gl.TEXTURE_2D, 
                             0, 
                             gl.LUMINANCE, 
-                            // NUM_LIGHTS, 
-                            // 1,
-                            lightTextureSideLength, 
-                            lightTextureSideLength, 
+                            NUM_LIGHTS, 
+                            1,
+                            // lightTextureSideLength, 
+                            // lightTextureSideLength, 
                             0, 
                             gl.LUMINANCE, 
                             gl.FLOAT, 
@@ -120,8 +120,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.texImage2D(gl.TEXTURE_2D, 
                             0, 
                             gl.RGB, 
-                            lightTextureSideLength, 
-                            lightTextureSideLength, 
+                            NUM_LIGHTS, 
+                            1, 
                             0, 
                             gl.RGB, 
                             gl.FLOAT, 
@@ -138,8 +138,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.texImage2D(gl.TEXTURE_2D, 
                             0, 
                             gl.RGBA, 
-                            lightTextureSideLength, 
-                            lightTextureSideLength, 
+                            NUM_LIGHTS, 
+                            1, 
                             0, 
                             gl.RGBA, 
                             gl.FLOAT, 
@@ -159,19 +159,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     FPR.light.update = function () {
         var b;
-        // for (var i = 0; i < NUM_LIGHTS; i++) {
-        //     b = 3 * i;
-
-        //     // pos.y
-        //     var mn = lightPosMin[1];
-        //     var mx = lightPosMax[1];
-        //     lightPosition[b + 1] = (lightPosition[b + 1] + lightVelY - mn + mx) % mx + mn;
-        // }
         for (var i = 0; i < NUM_LIGHTS; i++) {
-            if (i >= NUM_LIGHTS) {
-                break;
-            }
-
             b = 3 * i;
 
             // pos.y
@@ -193,8 +181,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                             0, 
                             0,
                             0, 
-                            lightTextureSideLength, 
-                            lightTextureSideLength, 
+                            NUM_LIGHTS, 
+                            1, 
                             gl.RGB, 
                             gl.FLOAT, 
                             lightPosition);
