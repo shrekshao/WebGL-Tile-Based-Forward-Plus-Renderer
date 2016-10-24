@@ -25,12 +25,17 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         var self = FPR.pass.lightCulling;
 
         // using gathering approach ("launch threads" against tile)
-        // store light idx. Texcoord indicates which tile it belongs to 
-        // for a 8x8 tile, it can store at most 3 * 8 * 8 = 192 lights for each tile
+        // store if light idx overlap with current tile. 
+        // Texcoord indicates which tile it belongs to, 
+        // uv - tile_uv => global light idx
+        // for a 16x16 tile, our scene can have at most 4 * 16 * 16 = 1024 lights for the whole scene
         var tileLightsTexture = self.tileLightsTexture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, tileLightsTexture); 
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, numTileWidth, numTileHeight, 0, gl.RGB, gl.FLOAT, new Float32Array(numTile * 3));
-        // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.FLOAT, new Float32Array(width * height * 4));
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         //gl.uniform1i(gl.getUniformLocation(program, "u_LightGridtex"),4); 
         gl.bindTexture(gl.TEXTURE_2D, null); 
 

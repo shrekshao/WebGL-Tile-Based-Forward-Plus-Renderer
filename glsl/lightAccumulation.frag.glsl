@@ -12,8 +12,8 @@ varying vec3 v_eyePosition;
 
 uniform mat4 v_viewMatrix;
 
-uniform sampler2D u_lightPositionTexture;
-uniform sampler2D u_lightColorRadiusTexture;
+uniform sampler2D u_lightPositionTexture;   //xyz
+uniform sampler2D u_lightColorRadiusTexture;    //rgba
 
 uniform sampler2D u_tileNumLightsTexture;   // num of lights in each tile
 uniform sampler2D u_tileLightsTexture;      // light idx, luminance

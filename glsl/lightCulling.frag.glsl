@@ -33,30 +33,59 @@ uniform sampler2D u_depthTexture;
 
 
 void main() {
-    
 
-    // vec2 tileInfo = texture2D(u_tileTexture, tileIdx).xy;  // [offset, size]
+    ivec2 pixelIdx = ivec2(gl_FragCoord.xy);    // floored
+    ivec2 tileIdx = pixelIdx / TILE_SIZE;
+    // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
+    ivec2 tilePixel0Idx = tileIdx * TILE_SIZE;  // bottom-left pixelId of this tile
 
 
-    // debug, render u_lightPositionTexture --------------------
-    float threadIdx = ((gl_FragCoord.y - 0.5) * float(u_textureWidth) + (gl_FragCoord.x - 0.5));
-    if (threadIdx < float(u_numLights))
+    ivec2 deltaIdx = pixelIdx - tilePixel0Idx;
+    int lightIdx = deltaIdx.y * TILE_SIZE + deltaIdx.x;
+
+    if (lightIdx < u_numLights)
     {
-        vec3 lightPos = texture2D(u_lightPositionTexture, vec2((threadIdx) / float(u_numLights) , 0.5)).xyz;
-        
-        // gl_FragColor = vec4(lightPos, 1.0);
-        // gl_FragColor = vec4(vec3(lightPos.y), 1.0);
+        vec2 lightUV = vec2( (float(lightIdx) + 0.5 ) / float(u_numLights) , 0.5); 
 
-        if (lightPos.y > 9.0)
-        {
-            gl_FragColor = vec4(1.0);
-        }
-        else
-        {
-            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-        }
+        vec4 lightPos = vec4(texture2D(u_lightPositionTexture, lightUV).xyz, 1.0);
+        float lightRadius = texture2D(u_lightColorRadiusTexture, lightUV).w;
+
+        // TODO: test if light overlap with this tile
+
+
+
+        // uv that we are going to write 1/0 for u_tileLightsTexture
+        // vec2 uv = (vec2(pixelIdx) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
+        
+        gl_FragColor = vec4(0.0, lightPos.y / 18.0, 0.0, 1.0);
     }
-    // -------------------------------------
+    else
+    {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    }
+
+
+
+
+    // // debug, render u_lightPositionTexture --------------------
+    // float threadIdx = ((gl_FragCoord.y - 0.5) * float(u_textureWidth) + (gl_FragCoord.x - 0.5));
+    // if (threadIdx < float(u_numLights))
+    // {
+    //     vec3 lightPos = texture2D(u_lightPositionTexture, vec2((threadIdx) / float(u_numLights) , 0.5)).xyz;
+        
+    //     // gl_FragColor = vec4(lightPos, 1.0);
+    //     // gl_FragColor = vec4(vec3(lightPos.y), 1.0);
+
+    //     if (lightPos.y > 9.0)
+    //     {
+    //         gl_FragColor = vec4(1.0);
+    //     }
+    //     else
+    //     {
+    //         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    //     }
+    // }
+    // // -------------------------------------
 
 
 
