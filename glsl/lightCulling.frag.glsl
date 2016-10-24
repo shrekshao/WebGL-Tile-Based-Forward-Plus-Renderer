@@ -5,8 +5,12 @@ precision highp float;
 precision highp int;
 
 #define TILE_SIZE 16
+#define LIGHT_LOOP_MAX 32
 
 varying vec2 v_uv;
+
+uniform mat4 u_viewMatrix;
+uniform mat4 u_projectionMatrix;
 
 uniform int u_numLights; 
 
@@ -22,6 +26,8 @@ uniform sampler2D u_tileLightsTexture;    // RGB, store light indices in a tile
 uniform sampler2D u_tileFrustumPlanesTexture;   // RGB, store frustum planes of tile
 
 uniform sampler2D u_depthTexture;
+
+
 
 void main() {
     
@@ -50,12 +56,58 @@ void main() {
     if ( pixelIdx == tileIdx * TILE_SIZE)
     {
         // working thread for this tile
-        gl_FragColor = vec4(1.0);
+
+        // get min and max of depth
+        float minDepth = 999.0;
+        float maxDepth = -999.0;
+        for (int x = 0; x < TILE_SIZE; x++)
+        {
+            for (int y = 0; y < TILE_SIZE; y++)
+            {
+                ivec2 pid = pixelIdx + ivec2(x, y);
+                vec2 uv = (vec2(pid) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
+                float d = texture2D(u_depthTexture, uv).r;
+                minDepth = min(d, minDepth);
+                maxDepth = max(d, maxDepth);
+            }
+        }
+
+        // test
+        gl_FragColor = vec4(vec3(minDepth), 1.0);
+
+
+        // calculate the frustum box
+        vec4 frustumPlanes[6];
+        frustumPlanes[0] = vec4(1.0, 0.0, 0.0, 1.0);
+
+        
+        // for each light
+        //  if it overlap with current tile frustum box
+        //      write to tileLightsTexture store light idx
+
+        vec2 lightIdx = vec2(0.0, 0.5);
+
+        // NOTE: loop i can only compare to constant
+        for (int i = 0; i < LIGHT_LOOP_MAX; i++)
+        {
+            if (i == u_numLights) break; 
+
+            lightIdx.x = float(i) / float(u_numLights);
+
+            vec3 lightPos = texture2D(u_lightPositionTexture, lightIdx).xyz;
+            vec4 lightColorRadius = texture2D(u_lightColorRadiusTexture, lightIdx);
+
+            // overlapping test
+
+        }
+
+
     }
     else
     {
         // other idle threads
         // should not operate to avoid race conditions
+        
         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     }
 
