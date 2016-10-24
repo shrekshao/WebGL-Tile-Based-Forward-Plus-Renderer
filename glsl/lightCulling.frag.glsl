@@ -36,9 +36,7 @@ void main() {
 
     ivec2 pixelIdx = ivec2(gl_FragCoord.xy);    // floored
     ivec2 tileIdx = pixelIdx / TILE_SIZE;
-    // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
     ivec2 tilePixel0Idx = tileIdx * TILE_SIZE;  // bottom-left pixelId of this tile
-
 
     ivec2 deltaIdx = pixelIdx - tilePixel0Idx;
     int lightIdx = deltaIdx.y * TILE_SIZE + deltaIdx.x;
@@ -50,14 +48,66 @@ void main() {
         vec4 lightPos = vec4(texture2D(u_lightPositionTexture, lightUV).xyz, 1.0);
         float lightRadius = texture2D(u_lightColorRadiusTexture, lightUV).w;
 
-        // TODO: test if light overlap with this tile
+        // Test if light overlap with this tile (lightCulling)
+        
+        // calculate the frustum box in frustum space first
+        ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
+        vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
+        vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0); 
 
+        vec4 frustumPlanes[6];
+
+        // in frustum space
+        frustumPlanes[0] = vec4(-1.0, 0.0, 0.0, floorCoord.x);       // left
+        frustumPlanes[1] = vec4(1.0, 0.0, 0.0, -ceilCoord.x);        // right
+        frustumPlanes[2] = vec4(0.0, -1.0, 0.0, floorCoord.y);        // bottom
+        frustumPlanes[3] = vec4(0.0, 1.0, 0.0, -ceilCoord.y);           // up
+
+        // // in view space
+        // frustumPlanes[4] = vec4(0.0, 0.0, 1.0, -nearDepth);    // near
+        // frustumPlanes[5] = vec4(0.0, 0.0, -1.0, farDepth);    // far
+
+
+        lightPos = u_viewMatrix * lightPos;
+
+        vec4 lightPosRight = lightPos + vec4(lightRadius, 0.0, 0.0, 0.0);
+        vec4 lightPosUp = lightPos + vec4(0.0, lightRadius, 0.0, 0.0);
+
+        lightPos = u_projectionMatrix * lightPos;
+        lightPosRight = u_projectionMatrix * lightPosRight;
+        lightPosUp = u_projectionMatrix * lightPosUp;
+
+        float radiusHorizontalNDC = lightPosRight.x - lightPos.x; 
+        float radiusVerticalNDC = lightPosRight.y - lightPos.y; 
+
+
+        float distance = 0.0;
+
+        distance += max(0.0, dot(lightPos, frustumPlanes[0]) - radiusHorizontalNDC);
+        distance += max(0.0, dot(lightPos, frustumPlanes[1]) - radiusHorizontalNDC);
+        distance += max(0.0, dot(lightPos, frustumPlanes[2]) - radiusVerticalNDC);
+        distance += max(0.0, dot(lightPos, frustumPlanes[3]) - radiusVerticalNDC);
+
+        // TODO: do depth culling using min max depth of tile
+        
+        if (distance > 0.0) 
+        {
+            // no overlapping
+            gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
+        }
+        else
+        {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+        
 
 
         // uv that we are going to write 1/0 for u_tileLightsTexture
         // vec2 uv = (vec2(pixelIdx) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
         
-        gl_FragColor = vec4(0.0, lightPos.y / 18.0, 0.0, 1.0);
+
+        // // Debug output: lightPos
+        // gl_FragColor = vec4(0.0, lightPos.y / 18.0, 0.0, 1.0);
     }
     else
     {
