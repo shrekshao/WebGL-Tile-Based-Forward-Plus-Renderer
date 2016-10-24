@@ -195,7 +195,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // init scene with gltf model
         //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
         //var url = "models/glTF-duck/duck.gltf";
-        var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
+        // var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
+        var url = 'models/gltf-sponza-ao/separate/sponza.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
 
 
@@ -349,8 +350,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     // pipeline function handler
-    var curPipeline = forwardPlusPipeline;
-    // var curPipeline = forwardPipeline;
+    // var curPipeline = forwardPlusPipeline;
+    var curPipeline = forwardPipeline;
 
     // ----------------------------------------------------
 
