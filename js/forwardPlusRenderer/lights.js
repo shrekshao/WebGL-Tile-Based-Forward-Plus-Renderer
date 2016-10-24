@@ -11,10 +11,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     
     var lightPos = FPR.light.lightPos;
 
-    // var lightPosMin = [-14, 0, -6];
-    // var lightPosMax = [14, 18, 6];
-    var lightPosMin = [0, 0, 0];
-    var lightPosMax = [1, 1, 1];
+    var lightPosMin = [-14, 0, -6];
+    var lightPosMax = [14, 18, 6];
+    // var lightPosMin = [0, 0, 0];
+    // var lightPosMax = [1, 1, 1];
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
     var LIGHT_RADIUS = 4.0;
