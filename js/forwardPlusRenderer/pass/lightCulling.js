@@ -76,6 +76,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         p.program = prog;
 
         // Retrieve the uniform and attribute locations
+
+        p.u_projectionMatrix = gl.getUniformLocation(prog, 'u_projectionMatrix');
         
         p.u_numLights = gl.getUniformLocation(prog, 'u_numLights');
 
@@ -124,6 +126,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.tileFrustumPlanes);
         gl.bindTexture(gl.TEXTURE_2D, this.tileFrustumPlanesTexture);
+
+
+        gl.uniformMatrix4fv(this.u_projectionMatrix, false, FPR.camera.projectionMatrix.elements);
 
         if (uniformDirty) {
             uniformDirty = false;

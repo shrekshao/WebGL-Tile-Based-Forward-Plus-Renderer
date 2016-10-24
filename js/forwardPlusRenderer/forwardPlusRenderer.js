@@ -172,7 +172,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // We only borrow its mouse control input and camera transformation matrix
         // We are not using the Three.js scene for rendering
 
-        camera = new THREE.PerspectiveCamera(
+        camera = FPR.camera = new THREE.PerspectiveCamera(
             45,             // Field of view
             width / height, // Aspect ratio
             near,            // Near plane
