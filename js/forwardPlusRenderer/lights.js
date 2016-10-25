@@ -11,17 +11,18 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     
     var lightPos = FPR.light.lightPos;
 
-    var lightPosMin = [-14, 0, -6];
-    var lightPosMax = [14, 18, 6];
+    var lightPosMin = [1.5, -2, -1];
+    var lightPosMax = [2, 5, 1];
     // var lightPosMin = [0, 0, 0];
     // var lightPosMax = [1, 1, 1];
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
     var LIGHT_RADIUS = 4.0;
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 128; // TODO: test with MORE lights!
+    // var LIGHT_RADIUS = 10000.0;
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 50; // TODO: test with MORE lights!
 
-    var lightTextureSideLength = 32;
-    var lightTextureSize = lightTextureSideLength * lightTextureSideLength;
+    // var lightTextureSideLength = 32;
+    // var lightTextureSize = lightTextureSideLength * lightTextureSideLength;
 
     var lightIndex = FPR.light.index = new Float32Array(NUM_LIGHTS);    // WebGL 1 doesn't support integer texture
     var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
@@ -51,6 +52,13 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             lightPosition[b + 0] = posfn(0);
             lightPosition[b + 1] = posfn(1);
             lightPosition[b + 2] = posfn(2);
+
+            // lightPosition[b + 0] = (b - 10) / 10 * 3;
+            // lightPosition[b + 1] = (b - 10) / 10 * 5;
+            // lightPosition[b + 2] = (b - 10) / 10* 2;
+            // lightPosition[b + 0] = 10;
+            // lightPosition[b + 1] = 10;
+            // lightPosition[b + 2] = 10;
 
             // rgb
             lightColorRadius[b + 0] = 1 + Math.random();
@@ -165,7 +173,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             // pos.y
             var mn = lightPosMin[1];
             var mx = lightPosMax[1];
-            lightPosition[b + 1] = (lightPosition[b + 1] + lightVelY - mn + mx) % mx + mn;
+            // lightPosition[b + 1] = (lightPosition[b + 1] + lightVelY - mn + mx) % mx + mn;
         }
 
         var gl = FPR.gl;

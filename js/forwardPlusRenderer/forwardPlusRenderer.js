@@ -9,6 +9,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         depthDebug: {},
         lightCulling: {},
         lightAccumulation: {}, 
+        
+        lightDebug: {},
 
         forward: {}
     };
@@ -23,6 +25,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         tileLights: 8,
         tileFrustumPlanes: 9
     };
+
+
+    var uselightDebug = true;
 
     // // var curPass = FPR.curPass = FPR.pass.forward;
     // var modes = ["forward", "depth-debug", "forward+"];
@@ -79,9 +84,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var MVNormal = mat3.create();
 
     // temp test
-    modelMatrix[0] = 0.01;
-    modelMatrix[5] = 0.01;
-    modelMatrix[10] = 0.01;
+    // modelMatrix[0] = 0.01;
+    // modelMatrix[5] = 0.01;
+    // modelMatrix[10] = 0.01;
 
 
     var canvas;
@@ -153,6 +158,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         FPR.pass.depthPrepass.init();
         FPR.pass.lightCulling.init();
+        FPR.pass.lightAccumulation.init();
+
+        if (uselightDebug) {
+            FPR.pass.lightDebug.init();
+        }
 
 
         // renderFullQuad buffer init
@@ -178,7 +188,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             near,            // Near plane
             far             // Far plane
         );
-        camera.position.set(-15.5, 1, -1);
+        // camera.position.set(-15.5, 1, -1);
+        camera.position.set(0, 1, 10);
         projectionMatrix = camera.projectionMatrix.elements;
         viewMatrix = camera.matrixWorldInverse.elements;
 
@@ -194,8 +205,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         // init scene with gltf model
         //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
-        //var url = "models/glTF-duck/duck.gltf";
-        var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
+        var url = "models/glTF-duck/duck.gltf";
+        // var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
+        // var url = 'models/gltf-sponza-test/sponza.gltf';
+        // var url = 'models/gltf-dabrovic-sponza/sponza.gltf';
         // var url = 'models/gltf-sponza-ao/separate/sponza.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
 
@@ -343,10 +356,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var forwardPlusPipeline = function() {
 
-        // // depth prepass
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        // render(FPR.pass.depthPrepass);
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        // depth prepass
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        render(FPR.pass.depthPrepass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         FPR.pass.lightCulling.execute();
 
@@ -377,6 +390,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         // execute render pipeline
         curPipeline();
+
+        if (uselightDebug) {
+            FPR.pass.lightDebug.render();
+        }
 
         FPR.stats.begin();
 

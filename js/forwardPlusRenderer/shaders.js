@@ -130,6 +130,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         loadShaderProgram(gl, 'glsl/lightAccumulation.vert.glsl', 'glsl/lightAccumulation.frag.glsl',
             FPR.pass.lightAccumulation.loadShaderProgramCallback);
 
+        // light Debug
+        loadShaderProgram(gl, 'glsl/lightDebug.vert.glsl', 'glsl/lightDebug.frag.glsl',
+            FPR.pass.lightDebug.loadShaderProgramCallback);
+
     }
 
 })();
