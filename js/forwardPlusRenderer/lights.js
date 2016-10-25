@@ -71,7 +71,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             lightColorRadius[b + 2] = 0.5 + Math.random();
 
             // radius
-            lightColorRadius[b + 3] = Math.random();
+            lightColorRadius[b + 3] = LIGHT_RADIUS;
         }
         // for (var i = 0; i < lightTextureSize; i++) {
         //     if (i >= NUM_LIGHTS) {
