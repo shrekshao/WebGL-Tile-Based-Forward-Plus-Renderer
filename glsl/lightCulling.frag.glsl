@@ -76,11 +76,14 @@ void main() {
         vec4 lightPosUp = lightPos + vec4(0.0, lightRadius, 0.0, 0.0);
 
         lightPos = u_projectionMatrix * lightPos;
+        lightPos /= lightPos.w;
         lightPosRight = u_projectionMatrix * lightPosRight;
+        lightPos /= lightPos.w;
         lightPosUp = u_projectionMatrix * lightPosUp;
+        lightPos /= lightPos.w;
 
         float radiusHorizontalNDC = lightPosRight.x - lightPos.x; 
-        float radiusVerticalNDC = lightPosRight.y - lightPos.y; 
+        float radiusVerticalNDC = lightPosUp.y - lightPos.y; 
 
 
         float distance = 0.0;
