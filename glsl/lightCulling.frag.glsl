@@ -5,7 +5,7 @@ precision highp float;
 precision highp int;
 
 #define TILE_SIZE 16
-#define LIGHT_LOOP_MAX 32
+// #define LIGHT_LOOP_MAX 32
 
 #define CAMERA_NEAR = 1.0
 #define CAMERA_FAR = 1000.0
@@ -53,9 +53,13 @@ void main() {
         // Test if light overlap with this tile (lightCulling)
         
         // calculate the frustum box in frustum space first
-        ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
-        vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
-        vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0); 
+
+        // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
+        // vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
+        // vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0);
+        vec2 fullScreenSize = vec2(u_textureWidth, u_textureHeight);
+        vec2 floorCoord = (2.0 * vec2(tilePixel0Idx)) / (fullScreenSize) - vec2(1.0);  // -1, 1
+        vec2 ceilCoord = (2.0 * vec2(tilePixel0Idx + ivec2(TILE_SIZE))) / (fullScreenSize) - vec2(1.0);  // -1, 1
 
         vec4 frustumPlanes[6];
 
@@ -98,7 +102,8 @@ void main() {
         if (distance > 0.0) 
         {
             // no overlapping
-            gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
+            // gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
         }
         else
         {

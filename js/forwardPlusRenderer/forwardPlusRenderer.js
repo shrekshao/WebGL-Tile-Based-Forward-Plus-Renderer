@@ -28,6 +28,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
     var uselightDebug = true;
+    // var uselightDebug = false;
 
     // // var curPass = FPR.curPass = FPR.pass.forward;
     // var modes = ["forward", "depth-debug", "forward+"];
