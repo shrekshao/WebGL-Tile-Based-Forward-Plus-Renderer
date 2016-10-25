@@ -39,7 +39,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         var gl = FPR.gl;
 
         gl.useProgram(this.program);
-        // gl.disable(gl.DEPTH_TEST);
+        gl.disable(gl.DEPTH_TEST);
 
         gl.uniformMatrix4fv(this.u_viewMatrix, false, FPR.camera.matrixWorldInverse.elements);
         gl.uniformMatrix4fv(this.u_projectionMatrix, false, FPR.camera.projectionMatrix.elements);
@@ -55,7 +55,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
-        // gl.enable(gl.DEPTH_TEST);
+        gl.enable(gl.DEPTH_TEST);
     };
     
 })();

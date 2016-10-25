@@ -300,8 +300,15 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.useProgram(pass.program);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        gl.activeTexture(gl.TEXTURE0 + tid);
-        gl.bindTexture(gl.TEXTURE_2D, texture);
+        if (texture) {
+            gl.activeTexture(gl.TEXTURE0 + tid);
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+        }
+        
+
+        if (pass.uniformBind) {
+            pass.uniformBind();
+        }
 
         if (uniformDirty) {
             uniformDirty = false;
@@ -364,7 +371,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         FPR.pass.lightCulling.execute();
 
-        render(FPR.pass.lightAccumulation);
+        // render(FPR.pass.lightAccumulation);
+        renderFullQuad(FPR.pass.lightAccumulation);
     };
 
     // pipeline function handler

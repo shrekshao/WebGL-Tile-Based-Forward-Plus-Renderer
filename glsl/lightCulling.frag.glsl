@@ -75,6 +75,7 @@ void main() {
 
 
         lightPos = u_viewMatrix * lightPos;
+        lightPos /= lightPos.w;
 
         vec4 lightPosRight = lightPos + vec4(lightRadius, 0.0, 0.0, 0.0);
         vec4 lightPosUp = lightPos + vec4(0.0, lightRadius, 0.0, 0.0);
@@ -102,13 +103,16 @@ void main() {
         if (distance > 0.0) 
         {
             // no overlapping
-            // gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
-            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+            gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
+            // gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
         }
         else
         {
             gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
         }
+        // gl_FragColor = vec4(floorCoord.xy, 0.0, 1.0);
+        // gl_FragColor = vec4(ceilCoord.xy, 0.0, 1.0);
+        // gl_FragColor = vec4(radiusHorizontalNDC, radiusVerticalNDC, 0.0, 1.0);
         
 
 

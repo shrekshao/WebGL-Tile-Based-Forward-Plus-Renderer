@@ -49,11 +49,18 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.lightCulling.tileLightsFB);
     };
 
+
+    var tmpMat4 = mat4.create();
+
     var uniformDirty = true;
     FPR.pass.lightAccumulation.uniformBind = function () {
         var gl = FPR.gl;
 
         gl.uniformMatrix4fv(this.u_viewMatrix, false, FPR.camera.matrixWorldInverse.elements);
+
+        // test
+        gl.uniformMatrix4fv(this.u_projectionMatrix, false, tmpMat4);
+        gl.uniformMatrix4fv(this.u_modelViewMatrix, false, tmpMat4);
 
         if (uniformDirty)
         {
