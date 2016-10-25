@@ -10,7 +10,7 @@ varying vec2 v_uv;
 
 varying vec3 v_eyePosition;
 
-// uniform mat4 v_viewMatrix;
+uniform mat4 u_viewMatrix;
 
 uniform int u_numLights;
 
@@ -37,6 +37,12 @@ void main() {
 
     vec3 color = vec3(0.0, 0.0, 0.0);
 
+    // shading info
+    // vec3 view = normalize(-v_eyePosition);
+
+    vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
+    vec3 diffuseLight = vec3(0.0);
+
     for (int y = 0; y < TILE_SIZE; y++)
     {
         if (lightIdx >= u_numLights) break;
@@ -53,13 +59,21 @@ void main() {
             {
                 vec2 lightUV = vec2( (float(lightIdx) + 0.5 ) / float(u_numLights) , 0.5);
                 vec4 lightPos = vec4(texture2D(u_lightPositionTexture, lightUV).xyz, 1.0);
-                float lightRadius = texture2D(u_lightColorRadiusTexture, lightUV).w;
+                // float lightRadius = texture2D(u_lightColorRadiusTexture, lightUV).w;
+                vec4 lightColorRadius = texture2D(u_lightColorRadiusTexture, lightUV);
 
 
-                // debug test:
-                color += vec3(0.1, 0.1, 0.1);
+                // // debug test:
+                // color += vec3(0.1);
 
-                // TODO: shading
+                // shading
+                lightPos = u_viewMatrix * lightPos;
+                vec3 l = lightPos.xyz - v_eyePosition;
+                float dist = length(l);
+                l /= dist;
+                float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
+                diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
+
 
             }
 
@@ -67,6 +81,9 @@ void main() {
         }
     }
 
+    diffuseColor *= diffuseLight;
+    color += diffuseColor;
+
     gl_FragColor = vec4(color, 1.0);
-    // gl_FragColor = vec4 (v_normal, 0.5);
+    // gl_FragColor = vec4 (v_normal, 1.0);
 }

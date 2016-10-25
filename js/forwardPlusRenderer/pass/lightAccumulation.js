@@ -24,6 +24,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         p.u_modelViewMatrix = gl.getUniformLocation(prog, 'u_modelViewMatrix');
         p.u_inverseTransposeModelViewMatrix = gl.getUniformLocation(prog, 'u_inverseTransposeModelViewMatrix');
         p.u_projectionMatrix    = gl.getUniformLocation(prog, 'u_projectionMatrix');
+
+        p.u_viewMatrix = gl.getUniformLocation(prog, 'u_viewMatrix');
         
         p.u_numLights = gl.getUniformLocation(prog, 'u_numLights');
 
@@ -50,6 +52,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var uniformDirty = true;
     FPR.pass.lightAccumulation.uniformBind = function () {
         var gl = FPR.gl;
+
+        gl.uniformMatrix4fv(this.u_viewMatrix, false, FPR.camera.matrixWorldInverse.elements);
 
         if (uniformDirty)
         {
