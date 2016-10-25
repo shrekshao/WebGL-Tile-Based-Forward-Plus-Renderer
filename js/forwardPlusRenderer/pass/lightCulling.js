@@ -62,16 +62,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     };
 
-
-    // per frame update
-    
-    FPR.pass.lightCulling.fboBind = function () {
-        var gl = FPR.gl;
-        // TODO
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.lightCulling.tileLightsFB);
-    };
-
-
     FPR.pass.lightCulling.loadShaderProgramCallback = function (prog) {
         var gl = FPR.gl;
 
@@ -104,6 +94,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         console.log("Shader Loaded: lightCulling");
     };
 
+    // FPR.pass.lightCulling.fboBind = function () {
+    //     var gl = FPR.gl;
+    //     // TODO
+    //     // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.lightCulling.tileLightsFB);
+    // };
     
 
     var uniformDirty = true;
@@ -168,7 +163,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.vertexAttribPointer(this.a_uv, 2, gl.FLOAT, false, 0, 0);
         }
 
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.tileLightsFB);
+
         gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     };

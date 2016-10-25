@@ -219,6 +219,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // uniform: projection Matrix
         gl.uniformMatrix4fv(pass.u_projectionMatrix, false, projectionMatrix);
 
+        if (pass.uniformBind) {
+            pass.uniformBind();
+        }
+
         var i, p;
         var scene = FPR.scene;
 
@@ -339,14 +343,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     var forwardPlusPipeline = function() {
 
-        // depth prepass
-        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        render(FPR.pass.depthPrepass);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        // // depth prepass
+        // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        // render(FPR.pass.depthPrepass);
+        // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         FPR.pass.lightCulling.execute();
 
-        // render(FPR.pass.lightAccumulation);
+        render(FPR.pass.lightAccumulation);
     };
 
     // pipeline function handler

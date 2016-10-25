@@ -21,7 +21,7 @@ uniform int u_numLights;
 uniform int u_textureWidth;
 uniform int u_textureHeight;
 
-uniform sampler2D u_lightIndexTexture;      //LUMINANCE (may be is not needed cuz we never sort)
+// uniform sampler2D u_lightIndexTexture;      //LUMINANCE (may be is not needed cuz we never sort)
 uniform sampler2D u_lightPositionTexture;   //RGB
 uniform sampler2D u_lightColorRadiusTexture;    //RGBA
 
@@ -40,6 +40,8 @@ void main() {
 
     ivec2 deltaIdx = pixelIdx - tilePixel0Idx;
     int lightIdx = deltaIdx.y * TILE_SIZE + deltaIdx.x;
+
+    // TODO: unwrap the rgba (one pixel handle 4 lights) 
 
     if (lightIdx < u_numLights)
     {

@@ -19,7 +19,8 @@ varying vec3 v_eyePosition;
 void main() {
     v_normal = normalize(u_inverseTransposeModelViewMatrix * a_normal);
     v_uv = a_uv;
-    v_eyePosition = u_modelViewMatrix * vec4(a_position, 1.0);
+    vec4 tmp = u_modelViewMatrix * vec4(a_position, 1.0);
+    v_eyePosition = tmp.xyz / tmp.w;
 
-    gl_Position = v_eyePosition;
+    gl_Position = u_projectionMatrix * tmp;
 }
