@@ -285,33 +285,35 @@
       "byteOffset": 0,
       "byteStride": 0,
       "componentType": 5126,
-      "count": 46866,
+      "count": 38581,
       "min": [
-        -17.40276,
-        -0.906689,
-        -7.798512
+        -17.402759552001953,
+        -0.9066889882087708,
+        -7.798511981964111
       ],
       "max": [
-        17.41724,
-        15.653311,
-        7.801488
+        17.417240142822266,
+        15.653310775756836,
+        7.801487922668457
       ],
       "type": "VEC3"
     },
-    "accessor_uv": {
+    "accessor_normal_generated": {
       "bufferView": "bufferView_0",
-      "byteOffset": 562392,
+      "byteOffset": 462972,
       "byteStride": 0,
       "componentType": 5126,
-      "count": 46866,
-      "type": "VEC2",
+      "count": 38581,
+      "type": "VEC3",
       "min": [
-        -13.4649658203125,
-        -22.4295654296875
+        -0.9995132088661194,
+        -1,
+        -1
       ],
       "max": [
-        14.065296173095703,
-        23.429550170898438
+        0.9995132088661194,
+        0.9995124340057373,
+        1
       ]
     }
   },
@@ -325,23 +327,23 @@
     "version": "1.0"
   },
   "buffers": {
-    "sponza_buffer": {
-      "byteLength": 1336020,
+    "buffer_0": {
       "type": "arraybuffer",
-      "uri": "sponza_buffer.bin"
+      "byteLength": 1324644,
+      "uri": "buffer_0.bin"
     }
   },
   "bufferViews": {
     "bufferView_0": {
-      "buffer": "sponza_buffer",
-      "byteLength": 937320,
+      "buffer": "buffer_0",
+      "byteLength": 925944,
       "byteOffset": 0,
       "target": 34962
     },
     "bufferView_1": {
-      "buffer": "sponza_buffer",
+      "buffer": "buffer_0",
       "byteLength": 398700,
-      "byteOffset": 937320,
+      "byteOffset": 925944,
       "target": 34963
     }
   },
@@ -352,17 +354,14 @@
     "00_SKAP": {
       "uri": "00_SKAP.JPG"
     },
+    "01_STUB": {
+      "uri": "01_STUB.JPG"
+    },
     "01_S_BA": {
       "uri": "01_S_BA.JPG"
     },
     "01_ST_KP": {
       "uri": "01_ST_KP.JPG"
-    },
-    "01_STUB": {
-      "uri": "01_STUB.JPG"
-    },
-    "KAMEN": {
-      "uri": "KAMEN.JPG"
     },
     "X01_ST": {
       "uri": "X01_ST.JPG"
@@ -370,17 +369,20 @@
     "KAMEN-stup": {
       "uri": "KAMEN-stup.JPG"
     },
-    "PROZOR1": {
-      "uri": "PROZOR1.JPG"
-    },
-    "VRATA_KO": {
-      "uri": "VRATA_KO.JPG"
-    },
     "RELJEF": {
       "uri": "RELJEF.JPG"
     },
+    "KAMEN": {
+      "uri": "KAMEN.JPG"
+    },
+    "PROZOR1": {
+      "uri": "PROZOR1.JPG"
+    },
     "VRATA_KR": {
       "uri": "VRATA_KR.JPG"
+    },
+    "VRATA_KO": {
+      "uri": "VRATA_KO.JPG"
     }
   },
   "materials": {
@@ -957,7 +959,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_0",
           "material": "material_sp_00_luk_mali",
@@ -966,7 +968,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_1",
           "material": "material_sp_svod_kapitel",
@@ -975,7 +977,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_2",
           "material": "material_sp_01_stub_baza_",
@@ -984,7 +986,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_3",
           "material": "material_sp_01_stub_kut",
@@ -993,7 +995,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_4",
           "material": "material_sp_00_stup",
@@ -1002,7 +1004,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_5",
           "material": "material_sp_01_stub_baza",
@@ -1011,7 +1013,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_6",
           "material": "material_sp_00_luk_mal1",
@@ -1020,7 +1022,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_7",
           "material": "material_sp_01_stub",
@@ -1029,7 +1031,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_8",
           "material": "material_sp_01_stup",
@@ -1038,7 +1040,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_9",
           "material": "material_sp_vijenac",
@@ -1047,7 +1049,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_10",
           "material": "material_sp_00_svod",
@@ -1056,7 +1058,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_11",
           "material": "material_sp_02_reljef",
@@ -1065,7 +1067,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_12",
           "material": "material_sp_01_luk_a",
@@ -1074,7 +1076,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_13",
           "material": "material_sp_zid_vani",
@@ -1083,7 +1085,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_14",
           "material": "material_sp_01_stup_baza",
@@ -1092,7 +1094,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_15",
           "material": "material_sp_00_zid",
@@ -1101,7 +1103,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_16",
           "material": "material_sp_00_prozor",
@@ -1110,7 +1112,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_17",
           "material": "material_sp_00_vrata_krug",
@@ -1119,7 +1121,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_18",
           "material": "material_sp_00_pod",
@@ -1128,7 +1130,7 @@
         {
           "attributes": {
             "POSITION": "accessor_position",
-            "TEXCOORD_0": "accessor_uv"
+            "NORMAL": "accessor_normal_generated"
           },
           "indices": "accessor_index_19",
           "material": "material_sp_00_vrata_kock",
@@ -1138,8 +1140,11 @@
     }
   },
   "nodes": {
-    "node_sponza": {
+    "rootNode": {
       "children": [],
+      "meshes": [
+        "mesh_sponza"
+      ],
       "matrix": [
         1,
         0,
@@ -1157,11 +1162,7 @@
         0,
         0,
         1
-      ],
-      "meshes": [
-        "mesh_sponza"
-      ],
-      "name": "sponza"
+      ]
     }
   },
   "samplers": {
@@ -1176,7 +1177,7 @@
   "scenes": {
     "scene_sponza": {
       "nodes": [
-        "node_sponza"
+        "rootNode"
       ]
     }
   },
@@ -1197,6 +1198,14 @@
       "target": 3553,
       "type": 5121
     },
+    "texture_01_STUB": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "01_STUB",
+      "target": 3553,
+      "type": 5121
+    },
     "texture_01_S_BA": {
       "format": 6407,
       "internalFormat": 6407,
@@ -1210,22 +1219,6 @@
       "internalFormat": 6407,
       "sampler": "sampler_0",
       "source": "01_ST_KP",
-      "target": 3553,
-      "type": 5121
-    },
-    "texture_01_STUB": {
-      "format": 6407,
-      "internalFormat": 6407,
-      "sampler": "sampler_0",
-      "source": "01_STUB",
-      "target": 3553,
-      "type": 5121
-    },
-    "texture_KAMEN": {
-      "format": 6407,
-      "internalFormat": 6407,
-      "sampler": "sampler_0",
-      "source": "KAMEN",
       "target": 3553,
       "type": 5121
     },
@@ -1245,27 +1238,27 @@
       "target": 3553,
       "type": 5121
     },
-    "texture_PROZOR1": {
-      "format": 6407,
-      "internalFormat": 6407,
-      "sampler": "sampler_0",
-      "source": "PROZOR1",
-      "target": 3553,
-      "type": 5121
-    },
-    "texture_VRATA_KO": {
-      "format": 6407,
-      "internalFormat": 6407,
-      "sampler": "sampler_0",
-      "source": "VRATA_KO",
-      "target": 3553,
-      "type": 5121
-    },
     "texture_RELJEF": {
       "format": 6407,
       "internalFormat": 6407,
       "sampler": "sampler_0",
       "source": "RELJEF",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_KAMEN": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "KAMEN",
+      "target": 3553,
+      "type": 5121
+    },
+    "texture_PROZOR1": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "PROZOR1",
       "target": 3553,
       "type": 5121
     },
@@ -1276,12 +1269,19 @@
       "source": "VRATA_KR",
       "target": 3553,
       "type": 5121
+    },
+    "texture_VRATA_KO": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "VRATA_KO",
+      "target": 3553,
+      "type": 5121
     }
   },
   "extensionsUsed": [],
   "animations": {},
   "cameras": {},
-  "extensions": {},
   "techniques": {
     "technique0": {
       "attributes": {
@@ -1454,5 +1454,6 @@
       "uri": "fragmentShader1.glsl"
     }
   },
-  "skins": {}
+  "skins": {},
+  "extensions": {}
 }
