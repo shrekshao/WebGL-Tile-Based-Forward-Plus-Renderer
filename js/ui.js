@@ -1,30 +1,36 @@
-var cfg;
+// var cfg;
 
 (function() {
     'use strict';
 
+    var FPR = ForwardPlusRenderer;
+
     var Cfg = function() {
         // TODO: Define config fields and defaults here
-        this.debugView = -1;
-        this.debugScissor = false;
+        this.curPipeline = 'forwardPlusTileLightDebugPipeline';
+        // this.curPipeline = 'depthDebugPipeline';
+        this.lightPositionDebug = true;
         this.enableEffect0 = false;
     };
 
     var init = function() {
-        cfg = new Cfg();
+        var cfg = FPR.cfg = new Cfg();
 
         var gui = new dat.GUI();
         // TODO: Define any other possible config values
-        gui.add(cfg, 'debugView', {
-            'None':             -1,
-            '0 Depth':           0,
-            '1 Position':        1,
-            '2 Geometry normal': 2,
-            '3 Color map':       3,
-            '4 Normal map':      4,
-            '5 Surface normal':  5
+        var pipeline = gui.add(cfg, 'curPipeline', {
+            // 'None':             -1,
+            '0 Forward Plus': 'forwardPlusPipeline',
+            '1 Forward Plus Tile Light Debug': 'forwardPlusTileLightDebugPipeline',
+            '2 Forward': 'forwardPipeline',
+            '3 Depth Debug': 'depthDebugPipeline'
         });
-        gui.add(cfg, 'debugScissor');
+
+        pipeline.onChange(FPR.setUniformDirty);
+
+        gui.add(cfg, 'lightPositionDebug');
+
+
 
         var eff0 = gui.addFolder('EFFECT NAME HERE');
         eff0.open();

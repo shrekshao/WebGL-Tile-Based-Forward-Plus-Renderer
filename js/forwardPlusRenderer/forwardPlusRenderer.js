@@ -28,8 +28,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
 
-    var uselightDebug = true;
-    // var uselightDebug = false;
 
     // // var curPass = FPR.curPass = FPR.pass.forward;
     // var modes = ["forward", "depth-debug", "forward+"];
@@ -164,9 +162,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         FPR.pass.tileLightDebug.init();
 
-        // if (uselightDebug) {
-            FPR.pass.lightDebug.init();
-        // }
+        FPR.pass.lightDebug.init();
 
 
         // renderFullQuad buffer init
@@ -349,56 +345,61 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     };
 
-
+    FPR.setUniformDirty = function () {
+        uniformDirty = true;
+    };
 
 
     // ------ Render pipeline function objects ---------------
+    FPR.pipeline = {
 
-    var depthDebugPipeline = function() {
-        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        render(FPR.pass.depthPrepass);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        depthDebugPipeline: function() {
+            gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+            render(FPR.pass.depthPrepass);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture, FPR.glTextureId.depth);
-    };
+            renderFullQuad(FPR.pass.depthDebug, FPR.pass.depthPrepass.depthTexture, FPR.glTextureId.depth);
+        },
 
-    var forwardPipeline = function() {
-        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightPosition);
-        gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
+        forwardPipeline: function() {
+            gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightPosition);
+            gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
 
-        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightColorRadius);
-        gl.bindTexture(gl.TEXTURE_2D, FPR.light.colorRadiusTexture);
+            gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightColorRadius);
+            gl.bindTexture(gl.TEXTURE_2D, FPR.light.colorRadiusTexture);
 
-        render(FPR.pass.forward);
-    };
+            render(FPR.pass.forward);
+        },
 
-    var forwardPlusPipeline = function() {
+        forwardPlusPipeline: function() {
 
-        // depth prepass
-        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        render(FPR.pass.depthPrepass);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            // depth prepass
+            gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+            render(FPR.pass.depthPrepass);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        FPR.pass.lightCulling.execute();
+            FPR.pass.lightCulling.execute();
 
-        render(FPR.pass.lightAccumulation);
-        // renderFullQuad(FPR.pass.lightAccumulation);
-    };
+            render(FPR.pass.lightAccumulation);
+            // renderFullQuad(FPR.pass.lightAccumulation);
+        },
 
-    var forwardPlusTileLightDebugPipeline = function() {
+        forwardPlusTileLightDebugPipeline: function() {
 
-        // depth prepass
-        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
-        render(FPR.pass.depthPrepass);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+            // depth prepass
+            gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+            render(FPR.pass.depthPrepass);
+            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
-        FPR.pass.lightCulling.execute();
+            FPR.pass.lightCulling.execute();
 
-        renderFullQuad(FPR.pass.tileLightDebug);
+            renderFullQuad(FPR.pass.tileLightDebug);
+        }
+
     };
 
     // pipeline function handler
-    var curPipeline = forwardPlusPipeline;
+    // var curPipeline = forwardPlusPipeline;
     // var curPipeline = forwardPlusTileLightDebugPipeline;
     // var curPipeline = forwardPipeline;
 
@@ -421,9 +422,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.light.update();
 
         // execute render pipeline
-        curPipeline();
+        // curPipeline();
+        // FPR.cfg.curPipeline();
 
-        if (uselightDebug) {
+        FPR.pipeline[FPR.cfg.curPipeline]();
+        // if (FPR.cfg.curPipeline === 0) {
+        //     FPR.pipeline.forwardPlusPipeline();
+        // } else if (FPR.cfg.curPipeline === 1) {
+        //     FPR.pipeline.forwardPlusTileLightDebugPipeline();
+        // } else if (FPR.cfg.curPipeline === 2) {
+        //     FPR.pipeline.forwardPipeline();
+        // } else if (FPR.cfg.curPipeline === 3) {
+        //     FPR.pipeline.depthDebugPipeline();
+        // }
+
+        if (FPR.cfg.lightPositionDebug) {
             FPR.pass.lightDebug.render();
         }
 
