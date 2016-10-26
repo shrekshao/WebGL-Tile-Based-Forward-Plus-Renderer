@@ -18,11 +18,14 @@ uniform sampler2D u_lightPositionTexture;   //xyz
 uniform sampler2D u_lightColorRadiusTexture;    //rgba
 
 
+uniform sampler2D u_diffuse;
+
 void main() {
 
     vec3 color = vec3(0.0, 0.0, 0.0);
 
-    vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
+    vec3 diffuseColor = texture2D(u_diffuse, v_uv).rgb;
+    vec3 ambientColor = diffuseColor * 0.2;
     vec3 diffuseLight = vec3(0.0);
 
     for (int i = 0; i < MAX_LIGHT_NUM; i++)
@@ -42,6 +45,8 @@ void main() {
         float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
         diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
     }
+
+    color += ambientColor;
 
     diffuseColor *= diffuseLight;
     color += diffuseColor;

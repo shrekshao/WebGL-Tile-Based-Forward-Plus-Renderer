@@ -17,7 +17,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         glTFLoader.loadGLTF(url, function (glTF) {
             var curScene = glTF.scenes[glTF.defaultScene];
 
-            var webGLTextures = {};
+            var webGLTextures = scene.textures = {};
 
             // temp var
             var i,len;

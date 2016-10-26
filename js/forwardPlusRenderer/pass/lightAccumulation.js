@@ -36,6 +36,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         p.u_lightColorRadiusTexture = gl.getUniformLocation(prog, 'u_lightColorRadiusTexture');
         p.u_tileLightsTexture = gl.getUniformLocation(prog, 'u_tileLightsTexture');
 
+
+        p.u_diffuse = gl.getUniformLocation(prog, 'u_diffuse');
+
         p.a_position  = gl.getAttribLocation(prog, 'a_position');
         p.a_normal    = gl.getAttribLocation(prog, 'a_normal');
         p.a_uv        = gl.getAttribLocation(prog, 'a_uv');

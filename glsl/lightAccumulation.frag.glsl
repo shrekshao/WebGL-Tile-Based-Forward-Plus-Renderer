@@ -23,6 +23,9 @@ uniform sampler2D u_lightColorRadiusTexture;    //rgba
 
 uniform sampler2D u_tileLightsTexture;      // 
 
+
+uniform sampler2D u_diffuse;
+
 void main() {
     
     ivec2 pixelIdx = ivec2(gl_FragCoord.xy);    //floored
@@ -33,9 +36,11 @@ void main() {
 
     vec3 color = vec3(0.0, 0.0, 0.0);
 
-    vec3 ambientColor = vec3(0.1, 0.1, 0.1);
+    
 
-    vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
+    // vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
+    vec3 diffuseColor = texture2D(u_diffuse, v_uv).rgb;
+    vec3 ambientColor = diffuseColor * 0.2;
     vec3 diffuseLight = vec3(0.0);
 
 
@@ -79,4 +84,7 @@ void main() {
     color += diffuseColor;
 
     gl_FragColor = vec4(color, 1.0);
+    // gl_FragColor = vec4(v_normal, 1.0);
+    // gl_FragColor = vec4(v_uv, 0.0, 1.0);
+    // gl_FragColor = vec4(texture2D(u_diffuse, v_uv).rgb, 1.0);
 }

@@ -192,7 +192,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // camera.position.set(-15.5, 1, -1);
         // camera.position.set(0, 1, 10);
         // camera.position.set(0, 0, 10);  // duck
-        camera.position.set(-7.8, 3.5, 0);
+        // camera.position.set(-7.8, 8, 0);
+        camera.position.set(-5, 1, 0);
         projectionMatrix = camera.projectionMatrix.elements;
         viewMatrix = camera.matrixWorldInverse.elements;
 
@@ -257,6 +258,19 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             mat3.transpose(MVNormal, MVNormal);
             gl.uniformMatrix3fv(pass.u_inverseTransposeModelViewMatrix, false, MVNormal);
 
+            if (uniformDirty) {
+                if (pass.u_diffuse !== undefined) {
+                    var texture;
+                    for (var tid in scene.textures) {
+                        texture = scene.textures[tid];
+                        
+                        gl.activeTexture(gl.TEXTURE0 + texture.id);
+                        gl.bindTexture(gl.TEXTURE_2D, texture.texture);
+                        gl.uniform1i(pass.u_diffuse, texture.id);
+                    }
+                }
+            }
+            
 
 
             // bind buffer
