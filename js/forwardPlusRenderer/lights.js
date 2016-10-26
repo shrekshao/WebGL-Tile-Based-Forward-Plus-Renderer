@@ -18,9 +18,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
     // var LIGHT_RADIUS = 5.0;
-    var LIGHT_RADIUS = 0;
+    var LIGHT_RADIUS = 1;
     // var LIGHT_RADIUS = 10000.0;
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 1; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 10; // TODO: test with MORE lights!
 
     // var lightTextureSideLength = 32;
     // var lightTextureSize = lightTextureSideLength * lightTextureSideLength;

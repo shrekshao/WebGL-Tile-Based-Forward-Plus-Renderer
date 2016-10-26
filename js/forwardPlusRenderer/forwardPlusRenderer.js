@@ -373,7 +373,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.pass.lightCulling.execute();
 
         // render(FPR.pass.lightAccumulation);
-        // renderFullQuad(FPR.pass.lightAccumulation);
+        renderFullQuad(FPR.pass.lightAccumulation);
     };
 
     // pipeline function handler

@@ -164,11 +164,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         }
 
 
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, this.tileLightsFB);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, this.tileLightsFB);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     };
