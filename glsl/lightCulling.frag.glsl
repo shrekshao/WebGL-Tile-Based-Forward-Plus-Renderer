@@ -45,26 +45,26 @@ void main() {
 
 
 
-    // // get min and max depth
-    // float farDepth = 999999.0;
-    // float nearDepth = -999999.0;
-    // for (int y = 0; y < TILE_SIZE; y++)
-    // {
-    //     for (int x = 0; x < TILE_SIZE; x++)
-    //     {
-    //         ivec2 pid = tilePixel0Idx + ivec2(x, y);
-    //         vec2 uv = (vec2(pid) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
+    // get min and max depth
+    float farDepth = 999999.0;
+    float nearDepth = -999999.0;
+    for (int y = 0; y < TILE_SIZE; y++)
+    {
+        for (int x = 0; x < TILE_SIZE; x++)
+        {
+            ivec2 pid = tilePixel0Idx + ivec2(x, y);
+            vec2 uv = (vec2(pid) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
 
-    //         float d = texture2D(u_depthTexture, uv).r;
-    //         // transform depth value to view space
+            float d = texture2D(u_depthTexture, uv).r;
+            // transform depth value to view space
             
-    //         d = 2.0 * d - 1.0;  //(0, 1) => (-1, 1)
-    //         d = - u_projectionMatrix[3][2] / (d + u_projectionMatrix[2][2]);
+            d = 2.0 * d - 1.0;  //(0, 1) => (-1, 1)
+            d = - u_projectionMatrix[3][2] / (d + u_projectionMatrix[2][2]);
 
-    //         farDepth = min(d, farDepth);
-    //         nearDepth = max(d, nearDepth);
-    //     }
-    // }
+            farDepth = min(d, farDepth);
+            nearDepth = max(d, nearDepth);
+        }
+    }
 
 
 
@@ -88,17 +88,37 @@ void main() {
         // vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0);
         
         vec2 fullScreenSize = vec2(u_textureWidth, u_textureHeight);
+
+        // tile position in NDC space
         vec2 floorCoord = 2.0 * vec2(tilePixel0Idx) / fullScreenSize - vec2(1.0);  // -1, 1
         vec2 ceilCoord = 2.0 * vec2(tilePixel0Idx + ivec2(TILE_SIZE)) / fullScreenSize - vec2(1.0);  // -1, 1
 
-        vec4 frustumPlanes[6];
+        float viewNear = - M[3][2] / ( -1.0 + M[2][2]);
+        float viewFar = - M[3][2] / (1.0 + M[2][2]);
+        // float viewNear = -1.0;
+        // float viewFar = -1000.0;
+        vec2 viewFloorCoord = vec2( (- viewNear * floorCoord.x - M[2][0] * viewNear) / M[0][0] , (- viewNear * floorCoord.y - M[2][1] * viewNear) / M[1][1] );
+        vec2 viewCeilCoord = vec2( (- viewNear * ceilCoord.x - M[2][0] * viewNear) / M[0][0] , (- viewNear * ceilCoord.y - M[2][1] * viewNear) / M[1][1] );
 
-        // in view space
-        // actually frustumPlanes.w = 0 for left, right, top, bottom
-        frustumPlanes[0] = vec4(M[0][0] + M[3][0], M[0][1] + M[3][1], M[0][2] + M[3][2], M[0][3] + M[3][3]);       // left
-        frustumPlanes[1] = vec4(-M[0][0] + M[3][0], -M[0][1] + M[3][1], -M[0][2] + M[3][2], -M[0][3] + M[3][3]);   // right
-        frustumPlanes[2] = vec4(M[1][0] + M[3][0], M[1][1] + M[3][1], M[1][2] + M[3][2], M[1][3] + M[3][3]);       // bottom
-        frustumPlanes[3] = vec4(-M[1][0] + M[3][0], -M[1][1] + M[3][1], -M[1][2] + M[3][2], -M[1][3] + M[3][3]);   // top
+
+
+        // calculate frustumPlanes for each tile in view space
+        vec4 frustumPlanes[6];
+        // actually frustumPlanes.w = 0 for left, right, top, bottom?
+
+        // frustumPlanes[0] = vec4(M[0][0] + M[3][0], M[0][1] + M[3][1], M[0][2] + M[3][2], M[0][3] + M[3][3]);       // left
+        // frustumPlanes[1] = vec4(-M[0][0] + M[3][0], -M[0][1] + M[3][1], -M[0][2] + M[3][2], -M[0][3] + M[3][3]);   // right
+        // frustumPlanes[2] = vec4(M[1][0] + M[3][0], M[1][1] + M[3][1], M[1][2] + M[3][2], M[1][3] + M[3][3]);       // bottom
+        // frustumPlanes[3] = vec4(-M[1][0] + M[3][0], -M[1][1] + M[3][1], -M[1][2] + M[3][2], -M[1][3] + M[3][3]);   // top
+
+        float A = 2.0 * viewNear / (viewCeilCoord.x - viewFloorCoord.x);
+        float B = 2.0 * viewNear / (viewCeilCoord.y - viewFloorCoord.y);
+        float C = - 2.0 * viewNear * viewFar / (viewFar - viewNear);
+        frustumPlanes[0] = vec4(A, 0.0, C, 0.0);       // left
+        frustumPlanes[1] = vec4(-A, 0.0, C, 0.0);   // right
+        frustumPlanes[2] = vec4(0.0, B, C, 0.0);       // bottom
+        frustumPlanes[3] = vec4(0.0, -B, C, 0.0);   // top
+
 
         // frustumPlanes[4] = vec4(0.0, 0.0, -1.0, -nearDepth);    // near
         // frustumPlanes[5] = vec4(0.0, 0.0, 1.0, -farDepth);    // far
@@ -147,7 +167,9 @@ void main() {
         }
 
 
-
+        // gl_FragColor = vec4(vec3(-viewNear * 0.5), 1.0);
+        // gl_FragColor = vec4(vec3(-viewFar / 2000.0), 1.0);
+        // gl_FragColor = vec4(vec3(-nearDepth)/20.0, 1.0);
         // gl_FragColor = vec4( 0.5 * (lightPos.xy + 1.0), 0.0, 1.0);
         // gl_FragColor = vec4(vec2(tilePixel0Idx) / fullScreenSize, 0.0 , 1.0);
         // gl_FragColor = vec4(vec3(1.0 - lightRadius), 1.0);
