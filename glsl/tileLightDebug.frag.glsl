@@ -4,6 +4,7 @@ precision highp float;
 precision highp int;
 
 #define TILE_SIZE 16
+// #define FULL_COLOR_SCALE_VALUE 10
 
 uniform int u_numLights;
 
@@ -49,7 +50,7 @@ void main() {
 
 
     // debug: num of lights
-    float t = float(numVisibleLights) / float(u_numLights);
+    float t = float(numVisibleLights) / float(u_numLights) * 2.0;
     color = vec3(4.0 * t - 2.0, t < 0.5 ? 4.0 * t: 4.0 - 4.0 * t , 2.0 - 4.0 * t);
 
     gl_FragColor = vec4(color, 1.0);
