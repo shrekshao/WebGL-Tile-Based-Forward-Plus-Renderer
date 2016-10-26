@@ -147,6 +147,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.clearColor(0, 0, 0, 1);
         gl.enable(gl.DEPTH_TEST);
+        gl.enable(gl.CULL_FACE);
+        gl.frontFace(gl.CCW);
+        gl.cullFace(gl.BACK);
         
         // // test alpha blend
         // gl.enable(gl.BLEND);
