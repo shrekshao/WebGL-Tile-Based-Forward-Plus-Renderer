@@ -214,7 +214,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // var url = 'models/gltf-sponza-test/sponza.gltf';
         // var url = 'models/gltf-dabrovic-sponza/sponza.gltf';
         // var url = 'models/gltf-sponza-ao/separate/sponza.gltf';
-        var url = 'models/gltf-sponza-kai/sponza.gltf';
+        // var url = 'models/gltf-sponza-kai/sponza.gltf';
+        var url = 'models/gltf-sponza-kai-fix/sponza.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
 
 

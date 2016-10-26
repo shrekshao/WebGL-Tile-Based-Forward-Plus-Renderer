@@ -26,6 +26,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     var LIGHT_RADIUS = 4;
     // var LIGHT_RADIUS = 10000.0;
     var NUM_LIGHTS = FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
+    // var NUM_LIGHTS = FPR.NUM_LIGHTS = 120; // TODO: test with MORE lights!
 
     
     var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
