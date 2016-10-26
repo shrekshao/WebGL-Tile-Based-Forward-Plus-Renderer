@@ -190,7 +190,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             far             // Far plane
         );
         // camera.position.set(-15.5, 1, -1);
-        camera.position.set(0, 1, 10);
+        // camera.position.set(0, 1, 10);
+        camera.position.set(0, 0, 10);
         projectionMatrix = camera.projectionMatrix.elements;
         viewMatrix = camera.matrixWorldInverse.elements;
 

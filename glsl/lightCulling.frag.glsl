@@ -111,13 +111,25 @@ void main() {
         // frustumPlanes[2] = vec4(M[1][0] + M[3][0], M[1][1] + M[3][1], M[1][2] + M[3][2], M[1][3] + M[3][3]);       // bottom
         // frustumPlanes[3] = vec4(-M[1][0] + M[3][0], -M[1][1] + M[3][1], -M[1][2] + M[3][2], -M[1][3] + M[3][3]);   // top
 
-        float A = 2.0 * viewNear / (viewCeilCoord.x - viewFloorCoord.x);
-        float B = 2.0 * viewNear / (viewCeilCoord.y - viewFloorCoord.y);
-        float C = - 2.0 * viewNear * viewFar / (viewFar - viewNear);
-        frustumPlanes[0] = vec4(A, 0.0, C, 0.0);       // left
-        frustumPlanes[1] = vec4(-A, 0.0, C, 0.0);   // right
-        frustumPlanes[2] = vec4(0.0, B, C, 0.0);       // bottom
-        frustumPlanes[3] = vec4(0.0, -B, C, 0.0);   // top
+        // float A = 2.0 * viewNear / (viewCeilCoord.x - viewFloorCoord.x);
+        // float B = 2.0 * viewNear / (viewCeilCoord.y - viewFloorCoord.y);
+        // float C = - 2.0 * viewNear * viewFar / (viewFar - viewNear);
+        // frustumPlanes[0] = vec4(A, 0.0, C, 0.0);       // left
+        // frustumPlanes[1] = vec4(-A, 0.0, C, 0.0);   // right
+        // frustumPlanes[2] = vec4(0.0, B, C, 0.0);       // bottom
+        // frustumPlanes[3] = vec4(0.0, -B, C, 0.0);   // top
+
+
+        // frustumPlanes[0] = vec4(- viewNear / viewFloorCoord.x, 0.0, 1.0, 0.0);       // left
+        // frustumPlanes[1] = vec4(- viewNear / viewCeilCoord.x, 0.0, 1.0, 0.0);   // right
+        // frustumPlanes[2] = vec4(0.0, - viewNear / viewFloorCoord.y, 1.0, 0.0);       // bottom
+        // frustumPlanes[3] = vec4(0.0, - viewNear / viewCeilCoord.y, 1.0, 0.0);   // top
+
+        frustumPlanes[0] = vec4(1.0, 0.0, - viewFloorCoord.x / viewNear, 0.0);       // left
+        frustumPlanes[1] = vec4(-1.0, 0.0, viewCeilCoord.x / viewNear, 0.0);   // right
+        frustumPlanes[2] = vec4(0.0, 1.0, - viewFloorCoord.y / viewNear, 0.0);       // bottom
+        frustumPlanes[3] = vec4(0.0, -1.0, viewCeilCoord.y / viewNear, 0.0);   // top
+
 
 
         // frustumPlanes[4] = vec4(0.0, 0.0, -1.0, -nearDepth);    // near
@@ -149,6 +161,13 @@ void main() {
                     1.0), 
                 frustumPlanes[i]));
 
+            // dp += max(0.0, dot(
+            //     vec4( 
+            //         frustumPlanes[i].x > 0.0 ? boxMax.x : boxMin.x, 
+            //         frustumPlanes[i].y > 0.0 ? boxMax.y : boxMin.y, 
+            //         frustumPlanes[i].z > 0.0 ? boxMax.z : boxMin.z, 
+            //         1.0), 
+            //     frustumPlanes[i]));
         }
 
 
@@ -167,6 +186,8 @@ void main() {
         }
 
 
+        // gl_FragColor = vec4(frustumPlanes[0].x / 10.0, 0.0, 0.0, 1.0);
+        // gl_FragColor = vec4(viewFloorCoord*2.0 - 0.1, 0.0, 1.0);
         // gl_FragColor = vec4(vec3(-viewNear * 0.5), 1.0);
         // gl_FragColor = vec4(vec3(-viewFar / 2000.0), 1.0);
         // gl_FragColor = vec4(vec3(-nearDepth)/20.0, 1.0);
