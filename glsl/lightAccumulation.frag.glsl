@@ -74,10 +74,5 @@ void main() {
     diffuseColor *= diffuseLight;
     color += diffuseColor;
 
-    // // debug: num of lights
-    // float t = float(numVisibleLights) / float(u_numLights);
-    // color = vec3(4.0 * t - 2.0, t < 0.5 ? 4.0 * t: 4.0 - 4.0 * t , 2.0 - 4.0 * t);
-
     gl_FragColor = vec4(color, 1.0);
-    // gl_FragColor = vec4 (v_normal, 1.0);
 }

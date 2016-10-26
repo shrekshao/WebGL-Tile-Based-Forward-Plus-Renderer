@@ -5,7 +5,6 @@ precision highp int;
 
 uniform mat4 u_modelViewMatrix;
 uniform mat4 u_projectionMatrix;
-//uniform mat3 u_inverseTransposeModelViewMatrix;
 
 attribute vec3 a_position;
 

@@ -7,8 +7,7 @@
 
     var Cfg = function() {
         // TODO: Define config fields and defaults here
-        this.curPipeline = 'forwardPlusTileLightDebugPipeline';
-        // this.curPipeline = 'depthDebugPipeline';
+        this.curPipeline = 'forwardPlusPipeline';
         this.lightPositionDebug = true;
         this.enableEffect0 = false;
     };
@@ -19,7 +18,6 @@
         var gui = new dat.GUI();
         // TODO: Define any other possible config values
         var pipeline = gui.add(cfg, 'curPipeline', {
-            // 'None':             -1,
             '0 Forward Plus': 'forwardPlusPipeline',
             '1 Forward Plus Tile Light Debug': 'forwardPlusTileLightDebugPipeline',
             '2 Forward': 'forwardPipeline',
@@ -30,12 +28,11 @@
 
         gui.add(cfg, 'lightPositionDebug');
 
-
-
+        
+        // TODO: add more effects toggles and parameters here
         var eff0 = gui.addFolder('EFFECT NAME HERE');
         eff0.open();
         eff0.add(cfg, 'enableEffect0');
-        // TODO: add more effects toggles and parameters here
     };
 
     globalInitHandlers.push(init);

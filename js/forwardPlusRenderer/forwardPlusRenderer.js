@@ -398,10 +398,6 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
     };
 
-    // pipeline function handler
-    // var curPipeline = forwardPlusPipeline;
-    // var curPipeline = forwardPlusTileLightDebugPipeline;
-    // var curPipeline = forwardPipeline;
 
     // ----------------------------------------------------
 
@@ -422,19 +418,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.light.update();
 
         // execute render pipeline
-        // curPipeline();
-        // FPR.cfg.curPipeline();
 
         FPR.pipeline[FPR.cfg.curPipeline]();
-        // if (FPR.cfg.curPipeline === 0) {
-        //     FPR.pipeline.forwardPlusPipeline();
-        // } else if (FPR.cfg.curPipeline === 1) {
-        //     FPR.pipeline.forwardPlusTileLightDebugPipeline();
-        // } else if (FPR.cfg.curPipeline === 2) {
-        //     FPR.pipeline.forwardPipeline();
-        // } else if (FPR.cfg.curPipeline === 3) {
-        //     FPR.pipeline.depthDebugPipeline();
-        // }
+
 
         if (FPR.cfg.lightPositionDebug) {
             FPR.pass.lightDebug.render();

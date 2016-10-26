@@ -80,11 +80,6 @@ void main() {
         // credit: http://www.txutxi.com/?p=444
 
         mat4 M = u_projectionMatrix;
-
-
-        // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
-        // vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
-        // vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0);
         
         vec2 fullScreenSize = vec2(u_textureWidth, u_textureHeight);
 
@@ -108,26 +103,6 @@ void main() {
 #else
         vec4 frustumPlanes[4];
 #endif
-        // actually frustumPlanes.w = 0 for left, right, top, bottom?
-
-        // frustumPlanes[0] = vec4(M[0][0] + M[3][0], M[0][1] + M[3][1], M[0][2] + M[3][2], M[0][3] + M[3][3]);       // left
-        // frustumPlanes[1] = vec4(-M[0][0] + M[3][0], -M[0][1] + M[3][1], -M[0][2] + M[3][2], -M[0][3] + M[3][3]);   // right
-        // frustumPlanes[2] = vec4(M[1][0] + M[3][0], M[1][1] + M[3][1], M[1][2] + M[3][2], M[1][3] + M[3][3]);       // bottom
-        // frustumPlanes[3] = vec4(-M[1][0] + M[3][0], -M[1][1] + M[3][1], -M[1][2] + M[3][2], -M[1][3] + M[3][3]);   // top
-
-        // float A = 2.0 * viewNear / (viewCeilCoord.x - viewFloorCoord.x);
-        // float B = 2.0 * viewNear / (viewCeilCoord.y - viewFloorCoord.y);
-        // float C = - 2.0 * viewNear * viewFar / (viewFar - viewNear);
-        // frustumPlanes[0] = vec4(A, 0.0, C, 0.0);       // left
-        // frustumPlanes[1] = vec4(-A, 0.0, C, 0.0);   // right
-        // frustumPlanes[2] = vec4(0.0, B, C, 0.0);       // bottom
-        // frustumPlanes[3] = vec4(0.0, -B, C, 0.0);   // top
-
-
-        // frustumPlanes[0] = vec4(- viewNear / viewFloorCoord.x, 0.0, 1.0, 0.0);       // left
-        // frustumPlanes[1] = vec4(- viewNear / viewCeilCoord.x, 0.0, 1.0, 0.0);   // right
-        // frustumPlanes[2] = vec4(0.0, - viewNear / viewFloorCoord.y, 1.0, 0.0);       // bottom
-        // frustumPlanes[3] = vec4(0.0, - viewNear / viewCeilCoord.y, 1.0, 0.0);   // top
 
         frustumPlanes[0] = vec4(1.0, 0.0, - viewFloorCoord.x / viewNear, 0.0);       // left
         frustumPlanes[1] = vec4(-1.0, 0.0, viewCeilCoord.x / viewNear, 0.0);   // right
@@ -180,6 +155,8 @@ void main() {
         }
 
 
+
+        // ------------ debug output ------------------
         // gl_FragColor = vec4(frustumPlanes[0].x / 10.0, 0.0, 0.0, 1.0);
         // gl_FragColor = vec4(viewFloorCoord*2.0 - 0.1, 0.0, 1.0);
         // gl_FragColor = vec4(vec3(-viewNear * 0.5), 1.0);
@@ -209,28 +186,5 @@ void main() {
     {
         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     }
-
-
-
-
-    // // debug, render u_lightPositionTexture --------------------
-    // float threadIdx = ((gl_FragCoord.y - 0.5) * float(u_textureWidth) + (gl_FragCoord.x - 0.5));
-    // if (threadIdx < float(u_numLights))
-    // {
-    //     vec3 lightPos = texture2D(u_lightPositionTexture, vec2((threadIdx) / float(u_numLights) , 0.5)).xyz;
-        
-    //     // gl_FragColor = vec4(lightPos, 1.0);
-    //     // gl_FragColor = vec4(vec3(lightPos.y), 1.0);
-
-    //     if (lightPos.y > 9.0)
-    //     {
-    //         gl_FragColor = vec4(1.0);
-    //     }
-    //     else
-    //     {
-    //         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    //     }
-    // }
-    // // -------------------------------------
 
 }
