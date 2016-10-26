@@ -20,7 +20,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     // var LIGHT_RADIUS = 5.0;
     var LIGHT_RADIUS = 1;
     // var LIGHT_RADIUS = 10000.0;
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 10; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 100; // TODO: test with MORE lights!
 
     // var lightTextureSideLength = 32;
     // var lightTextureSize = lightTextureSideLength * lightTextureSideLength;
@@ -179,7 +179,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             // pos.y
             var mn = lightPosMin[1];
             var mx = lightPosMax[1];
-            // lightPosition[b + 1] = (lightPosition[b + 1] + lightVelY - mn + mx) % mx + mn;
+            lightPosition[b + 1] = (lightPosition[b + 1] + lightVelY - mn + mx) % mx + mn;
         }
 
         var gl = FPR.gl;

@@ -65,17 +65,16 @@ void main() {
                 vec4 lightColorRadius = texture2D(u_lightColorRadiusTexture, lightUV);
 
 
-                // debug test:
-                // color += vec3(0.1);
-                numVisibleLights++;
+                // // debug: num of lights
+                // numVisibleLights++;
 
-                // // shading
-                // lightPos = u_viewMatrix * lightPos;
-                // vec3 l = lightPos.xyz - v_eyePosition;
-                // float dist = length(l);
-                // l /= dist;
-                // float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
-                // diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
+                // shading
+                lightPos = u_viewMatrix * lightPos;
+                vec3 l = lightPos.xyz - v_eyePosition;
+                float dist = length(l);
+                l /= dist;
+                float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
+                diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
 
 
             }
@@ -84,10 +83,12 @@ void main() {
         }
     }
 
-    // diffuseColor *= diffuseLight;
-    // color += diffuseColor;
-    float t = float(numVisibleLights) / float(u_numLights);
-    color = vec3(4.0 * t - 2.0, t < 0.5 ? 4.0 * t: 4.0 - 4.0 * t , 2.0 - 4.0 * t);
+    diffuseColor *= diffuseLight;
+    color += diffuseColor;
+
+    // // debug: num of lights
+    // float t = float(numVisibleLights) / float(u_numLights);
+    // color = vec3(4.0 * t - 2.0, t < 0.5 ? 4.0 * t: 4.0 - 4.0 * t , 2.0 - 4.0 * t);
 
     gl_FragColor = vec4(color, 1.0);
     // gl_FragColor = vec4 (v_normal, 1.0);

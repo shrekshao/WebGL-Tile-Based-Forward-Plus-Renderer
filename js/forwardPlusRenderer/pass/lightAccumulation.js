@@ -58,9 +58,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.uniformMatrix4fv(this.u_viewMatrix, false, FPR.camera.matrixWorldInverse.elements);
 
-        // test
-        gl.uniformMatrix4fv(this.u_projectionMatrix, false, tmpMat4);
-        gl.uniformMatrix4fv(this.u_modelViewMatrix, false, tmpMat4);
+        // // debug: test num of lights per tile
+        // gl.uniformMatrix4fv(this.u_projectionMatrix, false, tmpMat4);
+        // gl.uniformMatrix4fv(this.u_modelViewMatrix, false, tmpMat4);
 
         if (uniformDirty)
         {
