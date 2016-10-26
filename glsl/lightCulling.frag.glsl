@@ -4,6 +4,9 @@
 precision highp float;
 precision highp int;
 
+
+#define USE_TILE_MIN_MAX_DEPTH_CULLING 0
+
 #define TILE_SIZE 16
 // #define LIGHT_LOOP_MAX 32
 
@@ -44,7 +47,7 @@ void main() {
     // TODO: unwrap the rgba (one pixel handle 4 lights) 
 
 
-
+#if USE_TILE_MIN_MAX_DEPTH_CULLING
     // get min and max depth
     float farDepth = 999999.0;
     float nearDepth = -999999.0;
@@ -65,6 +68,7 @@ void main() {
             nearDepth = max(d, nearDepth);
         }
     }
+#endif
 
 
 
@@ -103,7 +107,12 @@ void main() {
 
 
         // calculate frustumPlanes for each tile in view space
+
+#if USE_TILE_MIN_MAX_DEPTH_CULLING
         vec4 frustumPlanes[6];
+#else
+        vec4 frustumPlanes[4];
+#endif
         // actually frustumPlanes.w = 0 for left, right, top, bottom?
 
         // frustumPlanes[0] = vec4(M[0][0] + M[3][0], M[0][1] + M[3][1], M[0][2] + M[3][2], M[0][3] + M[3][3]);       // left
@@ -130,20 +139,14 @@ void main() {
         frustumPlanes[2] = vec4(0.0, 1.0, - viewFloorCoord.y / viewNear, 0.0);       // bottom
         frustumPlanes[3] = vec4(0.0, -1.0, viewCeilCoord.y / viewNear, 0.0);   // top
 
-
-
-        // frustumPlanes[4] = vec4(0.0, 0.0, -1.0, -nearDepth);    // near
-        // frustumPlanes[5] = vec4(0.0, 0.0, 1.0, -farDepth);    // far
-
+#if USE_TILE_MIN_MAX_DEPTH_CULLING
+        frustumPlanes[4] = vec4(0.0, 0.0, -1.0, nearDepth);    // near
+        frustumPlanes[5] = vec4(0.0, 0.0, 1.0, -farDepth);    // far
+#endif
 
         // transform lightPos to view space
         lightPos = u_viewMatrix * lightPos;
         lightPos /= lightPos.w;
-
-        // vec4 box[2];
-        // box[0] = lightPos - vec4( vec3(lightRadius), 0.0);
-        // box[1] = lightPos + vec4( vec3(lightRadius), 0.0);
-
         
         vec4 boxMin = lightPos - vec4( vec3(lightRadius), 0.0);
         vec4 boxMax = lightPos + vec4( vec3(lightRadius), 0.0);
@@ -151,7 +154,11 @@ void main() {
 
         float dp = 0.0;     //dot product
 
+#if USE_TILE_MIN_MAX_DEPTH_CULLING
+        for (int i = 0; i < 6; i++)
+#else
         for (int i = 0; i < 4; i++)
+#endif
         {
             dp += min(0.0, dot(
                 vec4( 
@@ -160,14 +167,6 @@ void main() {
                     frustumPlanes[i].z > 0.0 ? boxMax.z : boxMin.z, 
                     1.0), 
                 frustumPlanes[i]));
-
-            // dp += max(0.0, dot(
-            //     vec4( 
-            //         frustumPlanes[i].x > 0.0 ? boxMax.x : boxMin.x, 
-            //         frustumPlanes[i].y > 0.0 ? boxMax.y : boxMin.y, 
-            //         frustumPlanes[i].z > 0.0 ? boxMax.z : boxMin.z, 
-            //         1.0), 
-            //     frustumPlanes[i]));
         }
 
 
