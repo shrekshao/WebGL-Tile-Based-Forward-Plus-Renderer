@@ -141,6 +141,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             gl.getExtension('OES_texture_float_linear');
             gl.getExtension('OES_texture_float');
+            gl.getExtension("OES_element_index_uint");
         }
 
 
@@ -190,7 +191,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         );
         // camera.position.set(-15.5, 1, -1);
         // camera.position.set(0, 1, 10);
-        camera.position.set(0, 0, 10);
+        // camera.position.set(0, 0, 10);  // duck
+        camera.position.set(-7.8, 3.5, 0);
         projectionMatrix = camera.projectionMatrix.elements;
         viewMatrix = camera.matrixWorldInverse.elements;
 
@@ -206,11 +208,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         // init scene with gltf model
         //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
-        var url = "models/glTF-duck/duck.gltf";
+        // var url = "models/glTF-duck/duck.gltf";
         // var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
         // var url = 'models/gltf-sponza-test/sponza.gltf';
         // var url = 'models/gltf-dabrovic-sponza/sponza.gltf';
         // var url = 'models/gltf-sponza-ao/separate/sponza.gltf';
+        var url = 'models/gltf-sponza-kai/sponza.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
 
 
@@ -284,6 +287,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             // draw
             gl.drawElements(p.gltf.mode, p.gltf.indices.length, p.gltf.indicesComponentType, 0);
+            
 
             if (pass.fboBind !== undefined) {
                 gl.bindFramebuffer(gl.FRAMEBUFFER, null);

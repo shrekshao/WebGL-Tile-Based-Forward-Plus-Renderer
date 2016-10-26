@@ -33,6 +33,8 @@ void main() {
 
     vec3 color = vec3(0.0, 0.0, 0.0);
 
+    vec3 ambientColor = vec3(0.1, 0.1, 0.1);
+
     vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
     vec3 diffuseLight = vec3(0.0);
 
@@ -70,6 +72,8 @@ void main() {
             lightIdx++;
         }
     }
+
+    color += ambientColor;
 
     diffuseColor *= diffuseLight;
     color += diffuseColor;

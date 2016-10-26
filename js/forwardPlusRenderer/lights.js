@@ -11,16 +11,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     
     var lightPos = FPR.light.lightPos;
 
-    var lightPosMin = [-2, -2, -1.5];
-    var lightPosMax = [2, 4, 1.5];
-    // var lightPosMin = [0, 0, 0];
-    // var lightPosMax = [1, 1, 1];
+    // // for duck
+    // var lightPosMin = [-2, -2, -1.5];
+    // var lightPosMax = [2, 4, 1.5];
+
+    // for duck
+    var lightPosMin = [-14, -2, -6];
+    var lightPosMax = [14, 18, 6];
+
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
     // var LIGHT_RADIUS = 5.0;
-    var LIGHT_RADIUS = 1;
+    // var LIGHT_RADIUS = 1;
+    var LIGHT_RADIUS = 4;
     // var LIGHT_RADIUS = 10000.0;
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 150; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
 
     
     var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
@@ -44,9 +49,13 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             lightPosition[b + 1] = posfn(1);
             lightPosition[b + 2] = posfn(2);
 
-            lightColorRadius[b + 0] = 0.5 + Math.random();
-            lightColorRadius[b + 1] = 0.5 + Math.random();
-            lightColorRadius[b + 2] = 0.5 + Math.random();
+            // lightColorRadius[b + 0] = 0.5 + Math.random();
+            // lightColorRadius[b + 1] = 0.5 + Math.random();
+            // lightColorRadius[b + 2] = 0.5 + Math.random();
+
+            lightColorRadius[b + 0] = 1 + Math.random();
+            lightColorRadius[b + 1] = 1 + Math.random();
+            lightColorRadius[b + 2] = 1 + Math.random();
 
             // radius
             lightColorRadius[b + 3] = LIGHT_RADIUS;
