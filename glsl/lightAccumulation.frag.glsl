@@ -23,27 +23,19 @@ uniform sampler2D u_lightColorRadiusTexture;    //rgba
 
 uniform sampler2D u_tileLightsTexture;      // 
 
-// offset numlights lightIdx
-
 void main() {
     
     ivec2 pixelIdx = ivec2(gl_FragCoord.xy);    //floored
     ivec2 tileIdx = pixelIdx / TILE_SIZE;
     ivec2 tilePixel0Idx = tileIdx * TILE_SIZE;  // first pixel idx of this tile
 
-    // vec2 uvNumTileLights = (vec2(tilePixel0Idx) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
-    // int numTileLight = texture2D(u_depthTexture, uv).r;
     int lightIdx = 0;
 
     vec3 color = vec3(0.0, 0.0, 0.0);
 
-    // shading info
-    // vec3 view = normalize(-v_eyePosition);
-
     vec3 diffuseColor = vec3(1.0, 1.0, 1.0);
     vec3 diffuseLight = vec3(0.0);
 
-    int numVisibleLights = 0;
 
     for (int y = 0; y < TILE_SIZE; y++)
     {
@@ -63,10 +55,6 @@ void main() {
                 vec4 lightPos = vec4(texture2D(u_lightPositionTexture, lightUV).xyz, 1.0);
                 // float lightRadius = texture2D(u_lightColorRadiusTexture, lightUV).w;
                 vec4 lightColorRadius = texture2D(u_lightColorRadiusTexture, lightUV);
-
-
-                // // debug: num of lights
-                // numVisibleLights++;
 
                 // shading
                 lightPos = u_viewMatrix * lightPos;

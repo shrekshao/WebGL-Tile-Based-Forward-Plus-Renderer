@@ -56,25 +56,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         // Forward
         loadShaderProgram(gl, 'glsl/forward.vert.glsl', 'glsl/forward.frag.glsl',
-            function(prog) {
-
-                // our current operating pass
-                var p = FPR.pass.forward;
-
-                p.program = prog;
-
-                // Retrieve the uniform and attribute locations
-                p.u_modelViewMatrix = gl.getUniformLocation(prog, 'u_modelViewMatrix');
-                p.u_inverseTransposeModelViewMatrix = gl.getUniformLocation(prog, 'u_inverseTransposeModelViewMatrix');
-                p.u_projectionMatrix    = gl.getUniformLocation(prog, 'u_projectionMatrix');
-
-                p.a_position  = gl.getAttribLocation(prog, 'a_position');
-                p.a_normal    = gl.getAttribLocation(prog, 'a_normal');
-                p.a_uv        = gl.getAttribLocation(prog, 'a_uv');
-
-                console.log("Shader Loaded: Forward");
-
-            });
+            FPR.pass.forward.loadShaderProgramCallback);
 
         
         // Depth prepass

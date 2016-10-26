@@ -113,8 +113,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.depth);
         gl.bindTexture(gl.TEXTURE_2D, FPR.pass.depthPrepass.depthTexture);
 
-        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightIndex);
-        gl.bindTexture(gl.TEXTURE_2D, FPR.light.indexTexture);
+        // gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightIndex);
+        // gl.bindTexture(gl.TEXTURE_2D, FPR.light.indexTexture);
 
         gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightPosition);
         gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
@@ -137,7 +137,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
             // assign one time static uniforms
             gl.uniform1i(this.u_depthTexture, FPR.glTextureId.depth);
-            gl.uniform1i(this.u_lightIndexTexture, FPR.glTextureId.lightIndex);
+            // gl.uniform1i(this.u_lightIndexTexture, FPR.glTextureId.lightIndex);
             gl.uniform1i(this.u_lightPositionTexture, FPR.glTextureId.lightPosition);
             gl.uniform1i(this.u_lightColorRadiusTexture, FPR.glTextureId.lightColorRadius);
             gl.uniform1i(this.u_tileLightsTexture, FPR.glTextureId.tileLights);

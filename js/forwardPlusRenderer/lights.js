@@ -20,7 +20,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     // var LIGHT_RADIUS = 5.0;
     var LIGHT_RADIUS = 1;
     // var LIGHT_RADIUS = 10000.0;
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 220; // TODO: test with MORE lights!
 
     // var lightTextureSideLength = 32;
     // var lightTextureSize = lightTextureSideLength * lightTextureSideLength;

@@ -8,10 +8,6 @@ precision highp int;
 #define USE_TILE_MIN_MAX_DEPTH_CULLING 0
 
 #define TILE_SIZE 16
-// #define LIGHT_LOOP_MAX 32
-
-#define CAMERA_NEAR = 1.0
-#define CAMERA_FAR = 1000.0
 
 varying vec2 v_uv;
 
@@ -24,7 +20,6 @@ uniform int u_numLights;
 uniform int u_textureWidth;
 uniform int u_textureHeight;
 
-// uniform sampler2D u_lightIndexTexture;      //LUMINANCE (may be is not needed cuz we never sort)
 uniform sampler2D u_lightPositionTexture;   //RGB
 uniform sampler2D u_lightColorRadiusTexture;    //RGBA
 

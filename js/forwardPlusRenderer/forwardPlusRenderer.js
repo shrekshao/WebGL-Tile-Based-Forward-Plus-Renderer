@@ -363,6 +363,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     var forwardPipeline = function() {
+        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightPosition);
+        gl.bindTexture(gl.TEXTURE_2D, FPR.light.positionTexture);
+
+        gl.activeTexture(gl.TEXTURE0 + FPR.glTextureId.lightColorRadius);
+        gl.bindTexture(gl.TEXTURE_2D, FPR.light.colorRadiusTexture);
+
         render(FPR.pass.forward);
     };
 
@@ -392,8 +398,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     };
 
     // pipeline function handler
-    // var curPipeline = forwardPlusPipeline;
-    var curPipeline = forwardPlusTileLightDebugPipeline;
+    var curPipeline = forwardPlusPipeline;
+    // var curPipeline = forwardPlusTileLightDebugPipeline;
     // var curPipeline = forwardPipeline;
 
     // ----------------------------------------------------
