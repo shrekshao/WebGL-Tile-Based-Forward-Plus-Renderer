@@ -43,14 +43,14 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         console.log("Shader Loaded: lightAccumulation");
     };
 
-    FPR.pass.lightAccumulation.fboBind = function () {
-        var gl = FPR.gl;
-        // TODO
-        // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.lightCulling.tileLightsFB);
-    };
+    // FPR.pass.lightAccumulation.fboBind = function () {
+    //     var gl = FPR.gl;
+    //     // TODO
+    //     // gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.lightCulling.tileLightsFB);
+    // };
 
 
-    var tmpMat4 = mat4.create();
+    // var tmpMat4 = mat4.create();
 
     var uniformDirty = true;
     FPR.pass.lightAccumulation.uniformBind = function () {

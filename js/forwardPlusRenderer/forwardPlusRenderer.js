@@ -10,6 +10,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         lightCulling: {},
         lightAccumulation: {}, 
         
+        tileLightDebug: {},
         lightDebug: {},
 
         forward: {}
@@ -161,9 +162,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         FPR.pass.lightCulling.init();
         FPR.pass.lightAccumulation.init();
 
-        if (uselightDebug) {
+        FPR.pass.tileLightDebug.init();
+
+        // if (uselightDebug) {
             FPR.pass.lightDebug.init();
-        }
+        // }
 
 
         // renderFullQuad buffer init
@@ -376,8 +379,21 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         // renderFullQuad(FPR.pass.lightAccumulation);
     };
 
+    var forwardPlusTileLightDebugPipeline = function() {
+
+        // depth prepass
+        gl.bindFramebuffer(gl.FRAMEBUFFER, FPR.pass.depthPrepass.framebuffer);
+        render(FPR.pass.depthPrepass);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+        FPR.pass.lightCulling.execute();
+
+        renderFullQuad(FPR.pass.tileLightDebug);
+    };
+
     // pipeline function handler
-    var curPipeline = forwardPlusPipeline;
+    // var curPipeline = forwardPlusPipeline;
+    var curPipeline = forwardPlusTileLightDebugPipeline;
     // var curPipeline = forwardPipeline;
 
     // ----------------------------------------------------
