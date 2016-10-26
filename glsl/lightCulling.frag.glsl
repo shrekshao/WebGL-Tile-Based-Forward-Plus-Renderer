@@ -43,6 +43,31 @@ void main() {
 
     // TODO: unwrap the rgba (one pixel handle 4 lights) 
 
+
+
+    // // get min and max depth
+    // float farDepth = 999999.0;
+    // float nearDepth = -999999.0;
+    // for (int y = 0; y < TILE_SIZE; y++)
+    // {
+    //     for (int x = 0; x < TILE_SIZE; x++)
+    //     {
+    //         ivec2 pid = tilePixel0Idx + ivec2(x, y);
+    //         vec2 uv = (vec2(pid) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
+
+    //         float d = texture2D(u_depthTexture, uv).r;
+    //         // transform depth value to view space
+            
+    //         d = 2.0 * d - 1.0;  //(0, 1) => (-1, 1)
+    //         d = - u_projectionMatrix[3][2] / (d + u_projectionMatrix[2][2]);
+
+    //         farDepth = min(d, farDepth);
+    //         nearDepth = max(d, nearDepth);
+    //     }
+    // }
+
+
+
     if (lightIdx < u_numLights)
     {
         vec2 lightUV = vec2( (float(lightIdx) + 0.5 ) / float(u_numLights) , 0.5); 
@@ -52,64 +77,84 @@ void main() {
 
         // Test if light overlap with this tile (lightCulling)
         
-        // calculate the frustum box in frustum space first
+        // calculate the frustum box in view space
+        // credit: http://www.txutxi.com/?p=444
+
+        mat4 M = u_projectionMatrix;
+
 
         // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
         // vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
         // vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0);
+        
         vec2 fullScreenSize = vec2(u_textureWidth, u_textureHeight);
-        vec2 floorCoord = (2.0 * vec2(tilePixel0Idx)) / (fullScreenSize) - vec2(1.0);  // -1, 1
-        vec2 ceilCoord = (2.0 * vec2(tilePixel0Idx + ivec2(TILE_SIZE))) / (fullScreenSize) - vec2(1.0);  // -1, 1
+        vec2 floorCoord = 2.0 * vec2(tilePixel0Idx) / fullScreenSize - vec2(1.0);  // -1, 1
+        vec2 ceilCoord = 2.0 * vec2(tilePixel0Idx + ivec2(TILE_SIZE)) / fullScreenSize - vec2(1.0);  // -1, 1
 
         vec4 frustumPlanes[6];
 
-        // in frustum space
-        frustumPlanes[0] = vec4(-1.0, 0.0, 0.0, floorCoord.x);       // left
-        frustumPlanes[1] = vec4(1.0, 0.0, 0.0, -ceilCoord.x);        // right
-        frustumPlanes[2] = vec4(0.0, -1.0, 0.0, floorCoord.y);        // bottom
-        frustumPlanes[3] = vec4(0.0, 1.0, 0.0, -ceilCoord.y);           // up
+        // in view space
+        // actually frustumPlanes.w = 0 for left, right, top, bottom
+        frustumPlanes[0] = vec4(M[0][0] + M[3][0], M[0][1] + M[3][1], M[0][2] + M[3][2], M[0][3] + M[3][3]);       // left
+        frustumPlanes[1] = vec4(-M[0][0] + M[3][0], -M[0][1] + M[3][1], -M[0][2] + M[3][2], -M[0][3] + M[3][3]);   // right
+        frustumPlanes[2] = vec4(M[1][0] + M[3][0], M[1][1] + M[3][1], M[1][2] + M[3][2], M[1][3] + M[3][3]);       // bottom
+        frustumPlanes[3] = vec4(-M[1][0] + M[3][0], -M[1][1] + M[3][1], -M[1][2] + M[3][2], -M[1][3] + M[3][3]);   // top
 
-        // // in view space
-        // frustumPlanes[4] = vec4(0.0, 0.0, 1.0, -nearDepth);    // near
-        // frustumPlanes[5] = vec4(0.0, 0.0, -1.0, farDepth);    // far
+        // frustumPlanes[4] = vec4(0.0, 0.0, -1.0, -nearDepth);    // near
+        // frustumPlanes[5] = vec4(0.0, 0.0, 1.0, -farDepth);    // far
 
 
+        // transform lightPos to view space
         lightPos = u_viewMatrix * lightPos;
         lightPos /= lightPos.w;
 
-        vec4 lightPosRight = lightPos + vec4(lightRadius, 0.0, 0.0, 0.0);
-        vec4 lightPosUp = lightPos + vec4(0.0, lightRadius, 0.0, 0.0);
+        // vec4 box[2];
+        // box[0] = lightPos - vec4( vec3(lightRadius), 0.0);
+        // box[1] = lightPos + vec4( vec3(lightRadius), 0.0);
 
-        lightPos = u_projectionMatrix * lightPos;
-        lightPos /= lightPos.w;
-        lightPosRight = u_projectionMatrix * lightPosRight;
-        lightPos /= lightPos.w;
-        lightPosUp = u_projectionMatrix * lightPosUp;
-        lightPos /= lightPos.w;
-
-        float radiusHorizontalNDC = lightPosRight.x - lightPos.x; 
-        float radiusVerticalNDC = lightPosUp.y - lightPos.y; 
-
-
-        float distance = 0.0;
-
-        distance += max(0.0, dot(lightPos, frustumPlanes[0]) - radiusHorizontalNDC);
-        distance += max(0.0, dot(lightPos, frustumPlanes[1]) - radiusHorizontalNDC);
-        distance += max(0.0, dot(lightPos, frustumPlanes[2]) - radiusVerticalNDC);
-        distance += max(0.0, dot(lightPos, frustumPlanes[3]) - radiusVerticalNDC);
-
-        // TODO: do depth culling using min max depth of tile
         
-        if (distance > 0.0) 
+        vec4 boxMin = lightPos - vec4( vec3(lightRadius), 0.0);
+        vec4 boxMax = lightPos + vec4( vec3(lightRadius), 0.0);
+
+
+        float dp = 0.0;     //dot product
+
+        for (int i = 0; i < 4; i++)
         {
+            dp += min(0.0, dot(
+                vec4( 
+                    frustumPlanes[i].x > 0.0 ? boxMax.x : boxMin.x, 
+                    frustumPlanes[i].y > 0.0 ? boxMax.y : boxMin.y, 
+                    frustumPlanes[i].z > 0.0 ? boxMax.z : boxMin.z, 
+                    1.0), 
+                frustumPlanes[i]));
+
+        }
+
+
+        if (dp < 0.0) 
+        {
+            // exists some of the plane fails the test
             // no overlapping
+
             gl_FragColor = vec4(0.0, 0.0, 0.5, 1.0);
             // gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
         }
         else
         {
+            // overlapping
             gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
         }
+
+
+
+        // gl_FragColor = vec4( 0.5 * (lightPos.xy + 1.0), 0.0, 1.0);
+        // gl_FragColor = vec4(vec2(tilePixel0Idx) / fullScreenSize, 0.0 , 1.0);
+        // gl_FragColor = vec4(vec3(1.0 - lightRadius), 1.0);
+        // gl_FragColor = vec4(vec3(lightRadius), 1.0);
+        // gl_FragColor = vec4(vec3(radiusHorizontalNDC), 1.0);
+
+        // gl_FragColor = vec4(vec3(1.0 - 0.0), 1.0);
         // gl_FragColor = vec4(floorCoord.xy, 0.0, 1.0);
         // gl_FragColor = vec4(ceilCoord.xy, 0.0, 1.0);
         // gl_FragColor = vec4(radiusHorizontalNDC, radiusVerticalNDC, 0.0, 1.0);
@@ -150,163 +195,5 @@ void main() {
     //     }
     // }
     // // -------------------------------------
-
-
-
-    // // find current threadIdx and tileIdx
-    // ivec2 pixelIdx = ivec2(gl_FragCoord.xy);    //floor
-    // ivec2 tileIdx = pixelIdx / TILE_SIZE;
-    // ivec2 tileSideNum = ivec2(u_textureWidth + TILE_SIZE - 1, u_textureHeight + TILE_SIZE - 1) / TILE_SIZE;
-
-    // // use exact one thread per tile to gather lights (kind of difficult...)
-    // if ( pixelIdx == tileIdx * TILE_SIZE)
-    // {
-    //     // working thread for this tile
-
-    //     // get min and max of depth
-    //     // both are negative numbers
-    //     float farDepth = 99999.0;
-    //     float nearDepth = - 99999.0;
-    //     for (int x = 0; x < TILE_SIZE; x++)
-    //     {
-    //         for (int y = 0; y < TILE_SIZE; y++)
-    //         {
-    //             ivec2 pid = pixelIdx + ivec2(x, y);
-    //             vec2 uv = (vec2(pid) + vec2(0.5, 0.5)) / vec2(u_textureWidth, u_textureHeight);
-    //             float d = texture2D(u_depthTexture, uv).r;
-    //             // transform depth value to view space
-                
-    //             d = 2.0 * d - 1.0;  //(0, 1) => (-1, 1)
-    //             d = - u_projectionMatrix[3][2] / (d + u_projectionMatrix[2][2]);
-
-    //             farDepth = min(d, farDepth);
-    //             nearDepth = max(d, nearDepth);
-    //         }
-    //     }
-
-    //     // // min depth test output
-    //     // gl_FragColor = vec4(vec3(1.0) - vec3(-nearDepth) * 0.005, 1.0);
-    //     // gl_FragColor = vec4(vec3( ((-nearDepth) - 1.0) - 0.9 ), 1.0);
-    //     gl_FragColor = vec4(vec3( ((-nearDepth) - 1.0) / 1000.0 ), 1.0);
-
-
-    //     // calculate the frustum box in frustum space first
-    //     vec2 floorCoord = (2.0 * vec2(tileIdx)) / (vec2(tileSideNum)) - vec2(1.0);  // -1, 1
-    //     vec2 ceilCoord = (2.0 * vec2(tileIdx + ivec2(1, 1))) / (vec2(tileSideNum)) - vec2(1.0); 
-
-    //     vec4 frustumPlanes[6];
-
-    //     // in frustum space
-    //     frustumPlanes[0] = vec4(-1.0, 0.0, 0.0, floorCoord.x);       // left
-    //     frustumPlanes[1] = vec4(1.0, 0.0, 0.0, -ceilCoord.x);        // right
-    //     frustumPlanes[2] = vec4(0.0, -1.0, 0.0, floorCoord.y);        // bottom
-    //     frustumPlanes[3] = vec4(0.0, 1.0, 0.0, -ceilCoord.y);           // up
-
-    //     // in view space
-    //     frustumPlanes[4] = vec4(0.0, 0.0, 1.0, -nearDepth);    // near
-    //     frustumPlanes[5] = vec4(0.0, 0.0, -1.0, farDepth);    // far
-
-    //     // frustumPlanes[0] = vec4(1.0, 0.0, 0.0, floorCoord.x);       // left
-    //     // frustumPlanes[1] = vec4(-1.0, 0.0, 0.0, -ceilCoord.x);        // right
-    //     // frustumPlanes[2] = vec4(0.0, 1.0, 0.0, floorCoord.y);        // bottom
-    //     // frustumPlanes[3] = vec4(0.0, -1.0, 0.0, -ceilCoord.y);           // up
-    //     // frustumPlanes[4] = vec4(0.0, 0.0, -1.0, -minDepth);    // near
-    //     // frustumPlanes[5] = vec4(0.0, 0.0, 1.0, maxDepth);    // far
-
-    //     // // transform to NDC space?
-    //     // for (int i = 0; i < 4; i++)
-    //     // {
-    //     //     frustumPlanes[i] = u_projectionMatrix * u_viewMatrix * frustumPlanes[i];
-    //     //     frustumPlanes[i] /= length
-    //     // }
-
-    //     // frustumPlanes[4] *= u_viewMatrix;
-    //     // frustumPlanes[4] /= length(frustumPlanes[4].xyz);
-    //     // frustumPlanes[5] *= u_viewMatrix;
-    //     // frustumPlanes[5] /= length(frustumPlanes[5].xyz);
-
-
-        
-    //     // for each light
-    //     //  if it overlap with current tile frustum box
-    //     //      write to tileLightsTexture store light idx
-
-    //     int numVisibleLight = 0;
-
-    //     vec2 lightIdx = vec2(0.0, 0.5);
-    //     // NOTE: loop i can only compare to constant
-    //     for (int i = 0; i < LIGHT_LOOP_MAX; i++)
-    //     {
-    //         if (i == u_numLights) break; 
-
-    //         lightIdx.x = float(i) / float(u_numLights);
-
-    //         vec4 lightPos = vec4(texture2D(u_lightPositionTexture, lightIdx).xyz, 1.0);
-    //         float depth = lightPos.z;
-    //         lightPos = u_projectionMatrix * u_viewMatrix * lightPos;
-    //         lightPos /= lightPos.w;
-    //         float radius = texture2D(u_lightColorRadiusTexture, lightIdx).w;
-    //         float r = radius;
-
-    //         float distance = 0.0;
-
-    //         for (int j = 0; j < 4; j++)
-    //         {
-                
-    //             distance += max(0.0, dot(lightPos, frustumPlanes[j]) - r);
-
-    //             if (distance > 0.0) break;
-    //         }
-
-    //         distance += max(0.0, dot(lightPos, frustumPlanes[4]) - radius);
-    //         distance += max(0.0, dot(lightPos, frustumPlanes[5]) - radius);
-
-    //         // if (distance <= 0.00001)
-    //         if (distance <= 0.001)
-    //         {
-    //             // visible
-
-    //             float idx;
-
-    //             // !!! cannot write to multiple address in the buffer...
-    //             gl_FragColor = vec4(0.5, 0.0, 0.0, 1.0);
-
-    //             numVisibleLight++;
-    //         }
-
-    //         // // overlapping test
-    //         // float distance = 0.0;
-    //         // for (int j = 0; j < 6; j++)
-    //         // {
-    //         //     distance = dot(lightPos, frustumPlanes[j]) + lightColorRadius.w;
-
-    //         //     if (distance <= 0.0) break;
-    //         // }
-
-    //         // // visible light
-    //         // if (distance > 0.0)
-    //         // {
-
-    //         // }
-
-    //     }
-
-
-    // }
-    // else
-    // {
-    //     // other idle threads
-    //     // should not operate to avoid race conditions
-        
-    //     gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    // }
-
-
-    // for loop light
-    //  if pass frustum hit test
-    //      write to tileLightsTexture store light idx
-
-
-
 
 }
