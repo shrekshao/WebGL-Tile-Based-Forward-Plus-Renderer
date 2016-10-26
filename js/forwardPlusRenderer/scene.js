@@ -125,9 +125,9 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                     // assume they all has such properties
                     var posInfo = primitive.attributes[primitive.technique.parameters['position'].semantic];
                     var norInfo = primitive.attributes[primitive.technique.parameters['normal'].semantic];
-                    //var uvInfo = primitive.attributes[primitive.technique.parameters['texcoord0'].semantic];
-                    var uvInfo = primitive.technique.parameters['texcoord0'] 
-                        ? primitive.attributes[primitive.technique.parameters['texcoord0'].semantic] 
+                    // var uvInfo = primitive.attributes[primitive.technique.parameters['texcoord0'].semantic];
+                    var uvInfo = primitive.technique.parameters['texcoord_0'] 
+                        ? primitive.attributes[primitive.technique.parameters['texcoord_0'].semantic] 
                         : {size: 3, type: posInfo.type, stride: 0, offset: 0};
 
                     var colmap = webGLTextures[colorTextureID] ? webGLTextures[colorTextureID].texture : null;
