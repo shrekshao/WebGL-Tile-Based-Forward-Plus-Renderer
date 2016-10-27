@@ -51,7 +51,7 @@ void main() {
 
     // debug: num of lights
     // float t = float(numVisibleLights) / float(u_numLights) * 5.0;
-    float t = float(numVisibleLights) / 10.0;
+    float t = float(numVisibleLights) / 50.0;
     color = vec3(4.0 * t - 2.0, t < 0.5 ? 4.0 * t: 4.0 - 4.0 * t , 2.0 - 4.0 * t);
 
     gl_FragColor = vec4(color, 1.0);

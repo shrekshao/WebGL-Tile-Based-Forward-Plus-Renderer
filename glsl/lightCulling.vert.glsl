@@ -10,5 +10,5 @@ varying vec2 v_uv;
 
 void main() {
     v_uv = a_uv;
-	gl_Position = vec4(a_position, 0.0, 1.0);
+	gl_Position = vec4(a_position, 0.999, 1.0);
 }

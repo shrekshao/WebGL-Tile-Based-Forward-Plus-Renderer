@@ -24,7 +24,6 @@ uniform sampler2D u_lightPositionTexture;   //RGB
 uniform sampler2D u_lightColorRadiusTexture;    //RGBA
 
 uniform sampler2D u_tileLightsTexture;    // RGB, store light indices in a tile
-uniform sampler2D u_tileFrustumPlanesTexture;   // RGB, store frustum planes of tile
 
 uniform sampler2D u_depthTexture;
 
@@ -127,6 +126,9 @@ void main() {
 #if USE_TILE_MIN_MAX_DEPTH_CULLING
         for (int i = 0; i < 6; i++)
 #else
+        dp += lightPos.z > viewNear + lightRadius ? -1.0 : 0.0;
+        dp += lightPos.z < viewFar - lightRadius ? -1.0 : 0.0;
+
         for (int i = 0; i < 4; i++)
 #endif
         {
@@ -138,6 +140,8 @@ void main() {
                     1.0), 
                 frustumPlanes[i]));
         }
+
+        
 
 
         if (dp < 0.0) 
