@@ -15,9 +15,11 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     // var lightPosMin = [-2, -2, -1.5];
     // var lightPosMax = [2, 4, 1.5];
 
-    // for duck
-    var lightPosMin = [-14, -2, -6];
-    var lightPosMax = [14, 18, 6];
+    // for sponza
+    // var lightPosMin = [-14, -2, -6];
+    // var lightPosMax = [14, 18, 6];
+    var lightPosMin = [0, -0.5, -3];
+    var lightPosMax = [14, 18, 3];
 
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
