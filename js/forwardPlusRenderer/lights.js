@@ -16,19 +16,18 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
     // var lightPosMax = [2, 4, 1.5];
 
     // for sponza
-    // var lightPosMin = [-14, -2, -6];
-    // var lightPosMax = [14, 18, 6];
-    var lightPosMin = [0, -0.5, -3];
-    var lightPosMax = [14, 18, 3];
+    var lightPosMin = [-14, -0.5, -6];
+    var lightPosMax = [14, 18, 6];
+    // var lightPosMin = [0, -0.5, -3];
+    // var lightPosMax = [14, 18, 3];
 
     //var lightVelMax = [0, -1, 0];
     var lightVelY = -0.03;
-    // var LIGHT_RADIUS = 5.0;
     // var LIGHT_RADIUS = 1;
     var LIGHT_RADIUS = 4;
     // var LIGHT_RADIUS = 10000.0;
     // var NUM_LIGHTS = FPR.NUM_LIGHTS = 20; // TODO: test with MORE lights!
-    var NUM_LIGHTS = FPR.NUM_LIGHTS = 120; // TODO: test with MORE lights!
+    var NUM_LIGHTS = FPR.NUM_LIGHTS = 120;
 
     
     var lightPosition = FPR.light.position = new Float32Array(NUM_LIGHTS * 3);
@@ -44,24 +43,25 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
         };
 
         var b;
+        var t;
         for (var i = 0; i < NUM_LIGHTS; i++) {
             b = 3 * i;
+            t = 4 * i;
 
             // pos
             lightPosition[b + 0] = posfn(0);
             lightPosition[b + 1] = posfn(1);
             lightPosition[b + 2] = posfn(2);
 
-            // lightColorRadius[b + 0] = 0.5 + Math.random();
-            // lightColorRadius[b + 1] = 0.5 + Math.random();
-            // lightColorRadius[b + 2] = 0.5 + Math.random();
-
-            lightColorRadius[b + 0] = 1 + Math.random();
-            lightColorRadius[b + 1] = 1 + Math.random();
-            lightColorRadius[b + 2] = 1 + Math.random();
+            lightColorRadius[t + 0] = Math.random();
+            lightColorRadius[t + 1] = Math.random();
+            lightColorRadius[t + 2] = Math.random();
+            // lightColorRadius[t + 0] = 1 + Math.random();
+            // lightColorRadius[t + 1] = 1 + Math.random();
+            // lightColorRadius[t + 2] = 1 + Math.random();
 
             // radius
-            lightColorRadius[b + 3] = LIGHT_RADIUS;
+            lightColorRadius[t + 3] = LIGHT_RADIUS;
         }
 
 
@@ -91,6 +91,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            // gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
 
             var lightColorRadiusTexId = FPR.glTextureId.lightColorRadius;
             FPR.light.colorRadiusTexture = gl.createTexture();
@@ -108,6 +109,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            // gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
 
 
 

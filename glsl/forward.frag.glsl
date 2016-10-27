@@ -41,6 +41,7 @@ void main() {
         lightPos = u_viewMatrix * lightPos;
         vec3 l = lightPos.xyz - v_eyePosition;
         float dist = length(l);
+        // if (dist > lightColorRadius.w) continue;
         l /= dist;
         float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
         diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
