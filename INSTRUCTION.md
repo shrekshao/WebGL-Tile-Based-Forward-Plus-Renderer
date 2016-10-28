@@ -15,37 +15,26 @@ to expect and what to prepare for.
 
 ### Running the code
 
-If you have Python, you should be able to run `server.py` to start a server.
-Then, open [`http://localhost:10565/`](http://localhost:10565/) in your browser.
+You need to launch a http server to view the content in your browser. 
+If you have python, run the following command in your project folder. 
+```
+python server.py
+```
+Then open [`http://localhost:10565/`](http://localhost:10565/) in your browser.
 
-This project requires a WebGL-capable web browser with support for
-`WEBGL_draw_buffers`. You can check for support on
-[WebGL Report](http://webglreport.com/).
-
-Google Chrome seems to work best on all platforms. If you have problems running
-the starter code, use Chrome or Chromium, and make sure you have updated your
-browser and video drivers.
-
-In Moore 100C, both Chrome and Firefox work.
-See below for notes on profiling/debugging tools.
-
-Use the screenshot button to save a screenshot.
+This project requires a WebGL-capable web browser with support some extensions. 
+You can use Chrome. Unfortunately Firefox doesn't work. 
+And make sure you have updated your browser and video drivers.
 
 ## Requirements
 
 **Ask on the mailing list for any clarifications.**
 
-In this project, you are given code for:
-
-* Loading OBJ files and color/normal map textures
-* Camera control
-* Partial implementation of deferred shading including many helper functions
+In this project, you are given code for the WebGL Forward Plus Renderer, which basically 
+takes care of all setups like glTF model loading, shaders loading and compiling, buffer binding, etc. 
+Your work is focusing on writing shaders in GLSL 1.00 that runs on GPU. 
 
 ### Required Tasks
-
-**Before doing performance analysis,** you must disable debug mode by changing
-`debugMode` to `false` in `framework.js`. Keep it enabled when developing - it
-helps find WebGL errors *much* more easily.
 
 You will need to perform the following tasks:
 
