@@ -1,9 +1,9 @@
-WebGL Forward+ Shading
+WebGL Forward Plus Shading
 ======================
 
 [CLICK ME FOR INSTRUCTION OF THIS PROJECT](./INSTRUCTION.md)
 
-**University of Pennsylvania, CIS 565: GPU Programming and Architecture, Project 6**
+**University of Pennsylvania, CIS 565: GPU Programming and Architecture, Project 5A WebGL Forward Plus Shading**
 
 * (TODO) YOUR NAME HERE
 * Tested on: (TODO) **Google Chrome 222.2** on
@@ -11,9 +11,9 @@ WebGL Forward+ Shading
 
 ### Live Online
 
-[![](img/thumb.png)](http://TODO.github.io/Project6-WebGL-Forward-Plus-Shading)
+[![](img/thumb.png)](http://TODO.github.io/Project5A-WebGL-Forward-Plus-Shading)
 
-### Demo Video
+### Demo Video/GIF
 
 [![](img/video.png)](TODO)
 
