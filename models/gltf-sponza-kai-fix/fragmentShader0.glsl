@@ -1,7 +1,7 @@
 precision highp float;
 uniform vec4 u_ambient;
 uniform sampler2D u_diffuse;
-uniform sampler2D u_bump;
+uniform sampler2D u_normal;
 uniform vec4 u_emission;
 uniform vec4 u_specular;
 uniform float u_shininess;
@@ -19,7 +19,7 @@ vec3 applyNormalMap(vec3 geomnor, vec3 normap) {
 }
 
 void main(void) {
-  vec3 normal = applyNormalMap(normalize(v_normal), texture2D(u_bump, v_texcoord_0).rgb);
+  vec3 normal = applyNormalMap(normalize(v_normal), texture2D(u_normal, v_texcoord_0).rgb);
   vec4 diffuse = texture2D(u_diffuse, v_texcoord_0);
   vec3 diffuseLight = vec3(0.0, 0.0, 0.0);
   vec3 specular = u_specular.rgb;
