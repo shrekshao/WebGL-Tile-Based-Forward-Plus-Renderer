@@ -263,15 +263,17 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             gl.uniformMatrix3fv(pass.u_inverseTransposeModelViewMatrix, false, MVNormal);
 
             if (uniformDirty) {
+
                 if (pass.u_diffuse !== undefined) {
-                    var texture;
-                    for (var tid in scene.textures) {
-                        texture = scene.textures[tid];
-                        
-                        gl.activeTexture(gl.TEXTURE0 + texture.id);
-                        gl.bindTexture(gl.TEXTURE_2D, texture.texture);
-                        gl.uniform1i(pass.u_diffuse, texture.id);
-                    }
+                    gl.activeTexture(gl.TEXTURE0 + p.colmap.id);
+                    gl.bindTexture(gl.TEXTURE_2D, p.colmap.texture);
+                    gl.uniform1i(pass.u_diffuse, p.colmap.id);
+                }
+                
+                if (pass.u_normalMap !== undefined) {
+                    gl.activeTexture(gl.TEXTURE0 + p.normap.id);
+                    gl.bindTexture(gl.TEXTURE_2D, p.normap.texture);
+                    gl.uniform1i(pass.u_normalMap, p.normap.id);
                 }
             }
             

@@ -39,14 +39,12 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
             var texture;
 
 
-            // temp
-            var colorTextureID;
+            // temp for sponza
+            var colorTextureName = 'texture_color';
+            var normalTextureName = 'texture_normal';
 
             // textures
             for (var tid in glTF.json.textures) {
-
-                //temp
-                colorTextureID = tid;
 
                 textureInfo = glTF.json.textures[tid];
                 target = textureInfo.target || gl.TEXTURE_2D;
@@ -57,7 +55,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                 image = glTF.images[textureInfo.source];
 
                 texture = gl.createTexture();
-                gl.activeTexture(gl.TEXTURE0 + textureID);
+                // gl.activeTexture(gl.TEXTURE0 + textureID);
                 gl.bindTexture(target, texture);
 
                 // TODO: use handler to store this kind of functions
@@ -130,7 +128,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                         ? primitive.attributes[primitive.technique.parameters['texcoord_0'].semantic] 
                         : {size: 3, type: posInfo.type, stride: 0, offset: 0};
 
-                    var colmap = webGLTextures[colorTextureID] ? webGLTextures[colorTextureID].texture : null;
+                    var colmap = webGLTextures[colorTextureName] ? webGLTextures[colorTextureName] : null;
+                    var normap = webGLTextures[normalTextureName] ? webGLTextures[normalTextureName] : null;
 
                     primitives.push({
                         gltf: primitive,
@@ -148,9 +147,10 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
                         uvInfo: uvInfo,
 
                         // specific textures temp test
-                        //colmap: webGLTextures[colorTextureID].texture,
+                        //colmap: webGLTextures[colorTextureName].texture,
+
                         colmap: colmap,
-                        //,normap: tex2
+                        normap: normap,
 
                         matrix: primitive.matrix
                     });
