@@ -100,6 +100,9 @@
   "images": {
     "color": {
       "uri": "color.jpeg"
+    },
+    "bumps": {
+      "uri": "bump.jpeg"
     }
   },
   "materials": {
@@ -114,6 +117,7 @@
           1
         ],
         "diffuse": "texture_color",
+        "bumpMap": "texture_bump",
         "emission": [
           0,
           0,
@@ -199,6 +203,14 @@
       "source": "color",
       "target": 3553,
       "type": 5121
+    },
+    "texture_bump": {
+      "format": 6407,
+      "internalFormat": 6407,
+      "sampler": "sampler_0",
+      "source": "bumps",
+      "target": 3553,
+      "type": 5121
     }
   },
   "extensionsUsed": [],
@@ -228,6 +240,9 @@
           "type": 35666
         },
         "diffuse": {
+          "type": 35678
+        },
+        "bumpMap": {
           "type": 35678
         },
         "emission": {
@@ -268,6 +283,7 @@
         "u_normalMatrix": "normalMatrix",
         "u_ambient": "ambient",
         "u_diffuse": "diffuse",
+        "u_bump": "bumpMap",
         "u_emission": "emission",
         "u_specular": "specular",
         "u_shininess": "shininess",
