@@ -25,6 +25,16 @@ uniform sampler2D u_tileLightsTexture;      //
 
 
 uniform sampler2D u_diffuse;
+uniform sampler2D u_normalMap;
+
+
+vec3 applyNormalMap(vec3 geomnor, vec3 normap) {
+    normap = normap * 2.0 - 1.0;
+    vec3 up = normalize(vec3(0.001, 1, 0.001));
+    vec3 surftan = normalize(cross(geomnor, up));
+    vec3 surfbinor = cross(geomnor, surftan);
+    return normap.y * surftan + normap.x * surfbinor + normap.z * geomnor;
+}
 
 void main() {
     
@@ -39,6 +49,8 @@ void main() {
     vec3 diffuseColor = texture2D(u_diffuse, v_uv).rgb;
     vec3 ambientColor = diffuseColor * 0.2;
     vec3 diffuseLight = vec3(0.0);
+
+    vec3 normal = applyNormalMap (v_normal, texture2D(u_normalMap,v_uv).rgb);
 
 
     for (int y = 0; y < TILE_SIZE; y++)
@@ -72,7 +84,7 @@ void main() {
                 }
                 l /= dist;
                 float attenuation = max(0.0, 1.0 - dist / lightColorRadius.w);
-                diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(v_normal, l));
+                diffuseLight += attenuation * lightColorRadius.rgb * max(0.0, dot(normal, l));
             }
 
             lightIdx++;

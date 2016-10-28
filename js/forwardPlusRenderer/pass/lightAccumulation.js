@@ -38,6 +38,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
         p.u_diffuse = gl.getUniformLocation(prog, 'u_diffuse');
+        p.u_normalMap = gl.getUniformLocation(prog, 'u_normalMap');
 
         p.a_position  = gl.getAttribLocation(prog, 'a_position');
         p.a_normal    = gl.getAttribLocation(prog, 'a_normal');
