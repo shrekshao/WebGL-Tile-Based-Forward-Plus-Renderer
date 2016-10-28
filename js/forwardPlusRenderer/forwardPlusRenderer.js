@@ -211,17 +211,8 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
 
         // init scene with gltf model
-        //var url = "models/glTF-duck-MaterialsCommon/duck.gltf";
-        // var url = "models/glTF-duck/duck.gltf";
-        // var url = 'models/2_cylinder_engine/2_cylinder_engine.gltf';
-        // var url = 'models/gltf-sponza-test/sponza.gltf';
-        // var url = 'models/gltf-dabrovic-sponza/sponza.gltf';
-        // var url = 'models/gltf-sponza-ao/separate/sponza.gltf';
-        // var url = 'models/gltf-sponza-kai/sponza.gltf';
         var url = 'models/gltf-sponza-kai-fix/sponza.gltf';
         FPR.scene.loadGLTF(url, function (gltf) {
-
-
             update();
         });
 
