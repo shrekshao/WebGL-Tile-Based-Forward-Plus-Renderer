@@ -109,7 +109,8 @@ optimizations/analysis).
 
 * (4pts) More efficient way of view frustum test detection. 
   - accurate light culling is expensive. But false positive will greatly reduce the performance. 
-  - show how many false positive does our naive frustum hittest have. show how many after optimization. 
+  - show how many false positive does our naive frustum hittest have. show how many after optimization.
+  - see [3] and [5]
 
 * (3pts) Compare performance to equivalently-lit forward shading and deferred-shading: 
   * You can pair with a classmate choosing to do deferred-renderer.
@@ -268,6 +269,8 @@ things how's it going.
   - http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
 * [4] Deferred VS Forward+: 
   - http://www.3dgep.com/forward-plus/
+* [5] GDC 2015
+  [Advancements in Tiled-Based Compute Rendering](http://twvideo01.ubm-us.net/o1/vault/gdc2015/presentations/Thomas_Gareth_Advancements_in_Tile-Based.pdf)
 
 **Also see:** The articles linked in the course schedule.
 
