@@ -55,8 +55,7 @@ var ForwardPlusRenderer = ForwardPlusRenderer || {};
 
         gl.uniformMatrix4fv(this.u_viewMatrix, false, FPR.camera.matrixWorldInverse.elements);
 
-        if (uniformDirty)
-        {
+        if (uniformDirty) {
             uniformDirty = false;
 
             // active and bind Textures
