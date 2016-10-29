@@ -4,7 +4,7 @@ Instructions
 This is due at midnight on the evening of **Sun, Nov 6 2016**.
 
 **Summary:** In this project, you'll be introduced to the basics of deferred
-shading and WebGL. You'll use GLSL and WebGL to implement a deferred shading
+shading and WebGL. You'll use GLSL and WebGL to implement a forward plus shading
 pipeline and various lighting and visual effects.
 
 **Recommendations:**
