@@ -37,6 +37,11 @@ WebGL Tiled Forward Plus Shading
 
 TODO: some details about implementation
 
+## Potential Optimization
+
+* [ ] early z for `lightAccumulation` pass
+* [ ] put min max depth for tile into a separate pass, output it into a small texture as buffer (currently each thread compute this for themselves, very reduntant work) 
+
 ## Credits
 
 * [Three.js](https://github.com/mrdoob/three.js) by [@mrdoob](https://github.com/mrdoob) and contributors
